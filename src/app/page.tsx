@@ -5,11 +5,11 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 
 const NAV_LINKS = [
-  { label: "Services", href: "/services" },
-  { label: "Jobs", href: "/jobs" },
+  { label: "Services", href: "/DHCwebsite/services" },
+  { label: "Jobs", href: "/DHCwebsite/jobs" },
   { label: "MOM Resources", href: "/mom-resources" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/DHCwebsite/about" },
+  { label: "Contact", href: "/DHCwebsite/contact" },
 ];
 
 const STATS = [
@@ -142,7 +142,7 @@ export default function Home() {
             {NAV_LINKS.map((l) => (
               <a key={l.label} href={l.href} className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200">{l.label}</a>
             ))}
-            <a href="/contact" className="bg-[#0071ba] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#005a96] transition-all hover:shadow-lg hover:shadow-[#0071ba]/30 hover:-translate-y-0.5">Hire Talent</a>
+            <a href="https://forms.gle/dMc28vTtxo2A1KhQ7" className="bg-[#0071ba] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#005a96] transition-all hover:shadow-lg hover:shadow-[#0071ba]/30 hover:-translate-y-0.5">Hire Talent</a>
           </div>
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2 flex flex-col gap-1.5">
             <div className={`w-6 h-0.5 bg-white transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
@@ -155,7 +155,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
               className="md:hidden bg-[#020817] border-t border-white/10 px-6 py-6 flex flex-col gap-4">
               {NAV_LINKS.map((l) => <a key={l.label} href={l.href} className="text-gray-300 font-medium py-1">{l.label}</a>)}
-              <a href="/contact" className="bg-[#0071ba] text-white text-center font-bold px-5 py-3 rounded-full">Hire Talent</a>
+              <a href="https://forms.gle/dMc28vTtxo2A1KhQ7" className="bg-[#0071ba] text-white text-center font-bold px-5 py-3 rounded-full">Hire Talent</a>
             </motion.div>
           )}
         </AnimatePresence>
@@ -306,7 +306,7 @@ export default function Home() {
                   <span key={c} className="border border-[#0071ba]/30 bg-[#0071ba]/10 text-[#6798d0] text-xs font-semibold px-4 py-2 rounded-full">{c}</span>
                 ))}
               </div>
-              <a href="/about" className="inline-flex items-center gap-2 text-[#6798d0] font-bold hover:text-white transition-colors hover:gap-3 duration-200 text-sm">
+              <a href="/DHCwebsite/about" className="inline-flex items-center gap-2 text-[#6798d0] font-bold hover:text-white transition-colors hover:gap-3 duration-200 text-sm">
                 Our Story →
               </a>
             </motion.div>
@@ -352,7 +352,7 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-10">
-            <a href="/services" className="inline-flex items-center gap-2 text-[#6798d0] font-bold hover:text-white transition-colors hover:gap-3 duration-200">View all services →</a>
+            <a href="/DHCwebsite/services" className="inline-flex items-center gap-2 text-[#6798d0] font-bold hover:text-white transition-colors hover:gap-3 duration-200">View all services →</a>
           </div>
         </div>
       </section>
@@ -448,7 +448,7 @@ export default function Home() {
               <a href="mailto:career@dhc.com.sg" className="group bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/40 text-base flex items-center gap-2 justify-center">
                 Get in Touch <span className="group-hover:translate-x-1 transition-transform">→</span>
               </a>
-              <a href="tel:+6560500777" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 text-base">
+              <a href="mailto:career@dhc.com.sg" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 text-base">
                 +65 6050 0777
               </a>
             </div>
