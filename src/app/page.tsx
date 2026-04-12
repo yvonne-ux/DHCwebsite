@@ -1,7 +1,7 @@
 
 "use client";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 
 const NAV_LINKS = [
@@ -13,10 +13,10 @@ const NAV_LINKS = [
 ];
 
 const STATS = [
-  { value: "5,000+", label: "Placements Made" },
-  { value: "12+", label: "Years Experience" },
-  { value: "98%", label: "Client Retention" },
-  { value: "72hr", label: "Shortlist Turnaround" },
+  { value: 5000, suffix: "+", label: "Placements Made" },
+  { value: 12, suffix: "+", label: "Years Experience" },
+  { value: 98, suffix: "%", label: "Client Retention" },
+  { value: 72, suffix: "hr", label: "Shortlist Turnaround" },
 ];
 
 const SERVICES = [
@@ -30,10 +30,70 @@ const SERVICES = [
 
 const CLIENTS = ["Unilever", "Nestlé", "Shopee", "CPF Board", "Tan Tock Seng Hospital", "DBS Bank", "Singtel", "NTUC", "Ministry of Education", "ST Engineering"];
 
+const TESTIMONIALS = [
+  { quote: "DHC delivered 3 shortlisted candidates within 48 hours. Exceptional speed and quality.", name: "HR Director", company: "Fortune 500 FMCG Company" },
+  { quote: "Their consultants truly understand our industry. Every placement has been spot on.", name: "Talent Acquisition Lead", company: "Leading Singapore Bank" },
+  { quote: "DHC has been our go-to recruitment partner for 5 years. Reliable, professional, results-driven.", name: "CEO", company: "Regional Tech Company" },
+];
+
+const ROLES = ["Permanent Recruitment", "Contract Staffing", "Payroll Outsourcing", "Executive Search", "Workforce Transformation", "Employer of Record"];
+
+function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const duration = 2000;
+    const step = Math.ceil(value / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= value) { setCount(value); clearInterval(timer); }
+      else setCount(start);
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, value]);
+
+  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
+}
+
+function TypewriterText() {
+  const [index, setIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = ROLES[index];
+    if (!deleting && displayed.length < current.length) {
+      const t = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
+      return () => clearTimeout(t);
+    } else if (!deleting && displayed.length === current.length) {
+      const t = setTimeout(() => setDeleting(true), 2000);
+      return () => clearTimeout(t);
+    } else if (deleting && displayed.length > 0) {
+      const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
+      return () => clearTimeout(t);
+    } else if (deleting && displayed.length === 0) {
+      setDeleting(false);
+      setIndex((i) => (i + 1) % ROLES.length);
+    }
+  }, [displayed, deleting, index]);
+
+  return (
+    <span className="text-[#0071ba]">
+      {displayed}<span className="animate-pulse">|</span>
+    </span>
+  );
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -42,28 +102,47 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => setActiveSlide(s => (s + 1) % 3), 5000);
-    return () => clearInterval(timer);
+    const onMove = (e: MouseEvent) => setCursor({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => setActiveSlide(s => (s + 1) % 3), 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => setActiveTestimonial(s => (s + 1) % TESTIMONIALS.length), 4000);
+    return () => clearInterval(t);
   }, []);
 
   const slides = [
-    { img: "/hero2.png", tag: "For Candidates", title: "Your Next Career Move", sub: "Thousands of roles across Singapore and SEA." },
-    { img: "/hero4.png", tag: "For Employers", title: "Hire Smarter. Move Faster.", sub: "MOM-licensed. ISO certified. 72-hour shortlist." },
-    { img: "/hero3.png", tag: "Our Promise", title: "People First. Always.", sub: "Where human connection meets smart recruitment." },
+    { img: "/hero2.png", label: "For Candidates", title: "Your Next Career Move", sub: "Thousands of roles across Singapore & SEA." },
+    { img: "/hero4.png", label: "For Employers", title: "Hire Smarter. Move Faster.", sub: "MOM-licensed. ISO certified. 72-hour shortlist." },
+    { img: "/hero3.png", label: "Our Promise", title: "People First. Always.", sub: "Where human connection meets smart recruitment." },
   ];
 
   return (
-    <main style={{ fontFamily: "'DM Sans', sans-serif" }} className="bg-[#020817] text-white overflow-x-hidden">
+    <main style={{ fontFamily: "'DM Sans', sans-serif", cursor: "none" }} className="bg-[#020817] text-white overflow-x-hidden">
+
+      {/* CUSTOM CURSOR */}
+      <div className="fixed z-[9999] pointer-events-none" style={{ left: cursor.x - 12, top: cursor.y - 12, transition: "left 0.05s, top 0.05s" }}>
+        <div className="w-6 h-6 rounded-full border-2 border-[#0071ba] opacity-80" />
+      </div>
+      <div className="fixed z-[9998] pointer-events-none" style={{ left: cursor.x - 4, top: cursor.y - 4 }}>
+        <div className="w-2 h-2 rounded-full bg-[#0071ba]" />
+      </div>
 
       {/* NAV */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#020817]/95 backdrop-blur-xl border-b border-white/5" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between py-4">
-          <a href="/"><Image src="/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert" /></a>
+          <a href="/" className="flex flex-col"><Image src="/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert" /><span className="text-[9px] text-[#6798d0] font-semibold tracking-[0.15em] uppercase mt-0.5 hidden md:block">Connecting Talents, Driving Dreams</span></a>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((l) => (
-              <a key={l.label} href={l.href} className="text-sm font-medium text-gray-400 hover:text-white transition-colors">{l.label}</a>
+              <a key={l.label} href={l.href} className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200">{l.label}</a>
             ))}
-            <a href="mailto:career@dhc.com.sg" className="bg-[#0071ba] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#005a96] transition-all hover:shadow-lg hover:shadow-[#0071ba]/30 hover:-translate-y-0.5">Hire Talent</a>
+            <a href="/contact" className="bg-[#0071ba] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#005a96] transition-all hover:shadow-lg hover:shadow-[#0071ba]/30 hover:-translate-y-0.5">Hire Talent</a>
           </div>
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2 flex flex-col gap-1.5">
             <div className={`w-6 h-0.5 bg-white transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
@@ -74,7 +153,7 @@ export default function Home() {
         <AnimatePresence>
           {menuOpen && (
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-              className="md:hidden bg-[#020817]/98 border-t border-white/10 px-6 py-6 flex flex-col gap-4">
+              className="md:hidden bg-[#020817] border-t border-white/10 px-6 py-6 flex flex-col gap-4">
               {NAV_LINKS.map((l) => <a key={l.label} href={l.href} className="text-gray-300 font-medium py-1">{l.label}</a>)}
               <a href="/contact" className="bg-[#0071ba] text-white text-center font-bold px-5 py-3 rounded-full">Hire Talent</a>
             </motion.div>
@@ -82,118 +161,126 @@ export default function Home() {
         </AnimatePresence>
       </nav>
 
-      {/* HERO SLIDESHOW */}
+      {/* HERO */}
       <section className="relative h-screen overflow-hidden">
-        {/* Slides */}
         {slides.map((slide, i) => (
           <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i === activeSlide ? "opacity-100" : "opacity-0"}`}>
-            <Image src={slide.img} alt={slide.title} fill className="object-cover object-center" priority={i === 0} />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#020817]/90 via-[#020817]/60 to-transparent" />
+            <Image src={slide.img} alt={slide.title} fill className="object-cover object-center scale-105" priority={i === 0} />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#020817]/95 via-[#020817]/60 to-[#020817]/20" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-transparent to-transparent" />
           </div>
         ))}
 
-        {/* Content */}
+        {/* Ambient glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-[#0071ba]/15 rounded-full blur-[100px]" />
+        </div>
+
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-6 w-full">
             <AnimatePresence mode="wait">
-              <motion.div key={activeSlide} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.6 }}
-                className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 border border-[#0071ba]/50 bg-[#0071ba]/15 text-[#6798d0] text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest uppercase backdrop-blur-sm">
+              <motion.div key={activeSlide} initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 40 }} transition={{ duration: 0.7 }} className="max-w-xl">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                  className="inline-flex items-center gap-2 border border-[#0071ba]/40 bg-[#0071ba]/10 text-[#6798d0] text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest uppercase">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0071ba] animate-ping" />
-                  {slides[activeSlide].tag}
-                </div>
-                <h1 style={{ fontFamily: "'Syne', sans-serif" }} className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-6 max-w-lg">
+                  {slides[activeSlide].label}
+                </motion.div>
+                <h1 style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-2">
                   {slides[activeSlide].title}
                 </h1>
-                <p className="text-gray-300 text-xl mb-10 leading-relaxed">{slides[activeSlide].sub}</p>
+                <p className="text-gray-300 text-lg mb-1 leading-relaxed">{slides[activeSlide].sub}</p>
+                <p className="text-[#6798d0] text-xs font-bold tracking-[0.2em] uppercase mb-3">Connecting Talents, Driving Dreams</p>
+                <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-xl font-bold mb-8 h-8">
+                  <TypewriterText />
+                </p>
                 <div className="flex flex-wrap gap-4">
                   <a href="https://www.mycareersfuture.gov.sg/search?search=dynamic+human+capital&sortBy=new_posting_date" target="_blank" rel="noopener noreferrer"
-                    className="group bg-[#0071ba] text-white font-bold px-8 py-4 rounded-full hover:bg-[#005a96] transition-all hover:shadow-2xl hover:shadow-[#0071ba]/40 hover:-translate-y-1 flex items-center gap-2">
+                    className="group bg-[#0071ba] text-white font-bold px-7 py-3.5 rounded-full hover:bg-[#005a96] transition-all hover:shadow-2xl hover:shadow-[#0071ba]/40 hover:-translate-y-1 flex items-center gap-2 text-sm">
                     Find Jobs <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </a>
-                  <a href="/contact" className="group border border-white/30 text-white font-bold px-8 py-4 rounded-full hover:bg-white/10 transition-all hover:-translate-y-1 flex items-center gap-2">
+                  <a href="mailto:career@dhc.com.sg"
+                    className="group border border-white/20 text-white font-bold px-7 py-3.5 rounded-full hover:bg-white/10 transition-all hover:-translate-y-1 flex items-center gap-2 text-sm">
                     Hire Talent <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </a>
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            {/* Slide indicators */}
-            <div className="absolute bottom-12 left-6 flex gap-3">
+            <div className="absolute bottom-10 left-6 flex gap-2">
               {slides.map((_, i) => (
                 <button key={i} onClick={() => setActiveSlide(i)}
-                  className={`h-1 rounded-full transition-all duration-500 ${i === activeSlide ? "w-10 bg-[#0071ba]" : "w-4 bg-white/30"}`} />
+                  className={`h-1 rounded-full transition-all duration-500 ${i === activeSlide ? "w-10 bg-[#0071ba]" : "w-4 bg-white/20"}`} />
               ))}
             </div>
           </div>
         </div>
 
-        {/* Credentials strip */}
-        <div className="absolute bottom-12 right-6 z-10 flex flex-col gap-2 hidden md:flex">
+        <div className="absolute bottom-10 right-6 hidden md:flex flex-col gap-2">
           {["MOM Licensed", "ISO Certified", "CPF Registered", "TAFEP Compliant"].map((c) => (
-            <span key={c} className="text-xs font-bold text-gray-400 border border-white/10 px-3 py-1 rounded-full text-right backdrop-blur-sm bg-black/20">✓ {c}</span>
+            <span key={c} className="text-xs font-bold text-gray-500 border border-white/8 px-3 py-1 rounded-full text-right backdrop-blur-sm">✓ {c}</span>
           ))}
         </div>
       </section>
 
       {/* STATS */}
       <section className="relative bg-[#0071ba] py-14 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#005a96] via-[#0071ba] to-[#005a96]" />
+        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
         <div className="relative max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
           {STATS.map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center">
-              <div style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white mb-1">{s.value}</div>
+              <div style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white mb-1">
+                <AnimatedCounter value={s.value} suffix={s.suffix} />
+              </div>
               <div className="text-xs font-bold text-blue-200 tracking-widest uppercase">{s.label}</div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* WHO WE SERVE */}
-      <section className="py-24 bg-[#020817] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#0071ba]/10 rounded-full blur-[100px]" />
+      {/* SPLIT AUDIENCE */}
+      <section className="py-24 bg-[#020817]">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
-            <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">Two Audiences. One Partner.</span>
-            <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white">Who We Serve</h2>
+            <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">Who We Serve</span>
+            <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white">Two Journeys. One Partner.</h2>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Candidates */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-3xl border border-white/8 hover:border-[#0071ba]/40 transition-all duration-500 hover:-translate-y-1">
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              className="group relative overflow-hidden rounded-3xl border border-white/8 hover:border-[#0071ba]/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#0071ba]/10">
               <div className="relative h-64 overflow-hidden">
-                <Image src="/hero2.png" alt="For Candidates" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/40 to-transparent" />
+                <Image src="/hero4.png" alt="For Candidates" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/50 to-transparent" />
+                <div className="absolute top-4 left-4 bg-[#0071ba]/20 border border-[#0071ba]/40 text-[#6798d0] text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-widest">FOR CANDIDATES</div>
               </div>
               <div className="p-8 bg-[#0a1628]">
-                <h3 style={{ fontFamily: "'Syne', sans-serif" }} className="text-2xl font-black text-white mb-2">For Candidates</h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">Explore thousands of roles across Singapore and SEA. Your next career move starts here.</p>
+                <h3 style={{ fontFamily: "'Syne', sans-serif" }} className="text-2xl font-black text-white mb-3">Find Your Dream Job</h3>
+                <p className="text-gray-400 mb-6 leading-relaxed text-sm">Explore thousands of roles across Singapore and SEA. From fresh grad to C-suite — your next move starts here.</p>
                 <div className="flex flex-col gap-3">
                   <a href="https://www.mycareersfuture.gov.sg/search?search=dynamic+human+capital&sortBy=new_posting_date" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-between bg-[#0071ba] text-white font-bold px-5 py-3.5 rounded-xl hover:bg-[#005a96] transition-colors">
-                    <span>Search MyCareersFuture</span><span>→</span>
+                    className="flex items-center justify-between bg-[#0071ba] text-white font-bold px-5 py-3.5 rounded-xl hover:bg-[#005a96] transition-all group/btn hover:-translate-y-0.5">
+                    <span className="text-sm">Search MyCareersFuture</span><span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                   </a>
                   <a href="https://www.jobstreet.com.sg/jobs?q=Dynamic+Human+Capital&sortmode=ListedDate" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-between border border-white/15 text-white font-bold px-5 py-3.5 rounded-xl hover:bg-white/5 transition-colors">
-                    <span>Browse JobStreet</span><span>→</span>
+                    className="flex items-center justify-between border border-white/15 text-white font-bold px-5 py-3.5 rounded-xl hover:bg-white/5 transition-all group/btn hover:-translate-y-0.5">
+                    <span className="text-sm">Browse JobStreet</span><span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                   </a>
                 </div>
               </div>
             </motion.div>
 
-            {/* Employers */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/8 hover:border-[#0071ba]/40 transition-all duration-500 hover:-translate-y-1">
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              className="group relative overflow-hidden rounded-3xl border border-white/8 hover:border-[#0071ba]/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#0071ba]/10">
               <div className="relative h-64 overflow-hidden">
                 <Image src="/hero3.png" alt="For Employers" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/50 to-transparent" />
+                <div className="absolute top-4 left-4 bg-[#0071ba]/20 border border-[#0071ba]/40 text-[#6798d0] text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-widest">FOR EMPLOYERS</div>
               </div>
               <div className="p-8 bg-[#0a1628]">
-                <h3 style={{ fontFamily: "'Syne', sans-serif" }} className="text-2xl font-black text-white mb-2">For Employers</h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">Access Singapore&apos;s best talent in 72 hours. MOM-licensed. ISO certified. Trusted by 200+ companies.</p>
-                <a href="/contact" className="flex items-center justify-between bg-white text-[#020817] font-black px-5 py-3.5 rounded-xl hover:bg-gray-100 transition-colors">
-                  <span>Talk to a Consultant</span><span>→</span>
+                <h3 style={{ fontFamily: "'Syne', sans-serif" }} className="text-2xl font-black text-white mb-3">Build Your Dream Team</h3>
+                <p className="text-gray-400 mb-6 leading-relaxed text-sm">Access Singapore's best talent in 72 hours. MOM-licensed. ISO certified. Trusted by 200+ leading companies.</p>
+                <a href="mailto:career@dhc.com.sg"
+                  className="flex items-center justify-between bg-white text-[#020817] font-black px-5 py-3.5 rounded-xl hover:bg-gray-100 transition-all group/btn hover:-translate-y-0.5">
+                  <span className="text-sm">Talk to a Consultant</span><span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </a>
               </div>
             </motion.div>
@@ -201,27 +288,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TEAM PHOTO SECTION */}
-      <section className="py-24 bg-[#030d1a] relative overflow-hidden">
+      {/* TEAM SECTION */}
+      <section className="py-24 bg-[#030d1a]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-4 block">Our Team</span>
-              <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">People-First. Always.</h2>
-              <p className="text-gray-400 text-lg leading-relaxed mb-8">Behind every successful placement is a dedicated DHC consultant who genuinely cares. We&apos;ve been building careers and teams across Singapore since 2012.</p>
-              <div className="flex flex-wrap gap-3">
+              <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-4 block">Est. 2012</span>
+              <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">People-First.<br />Always.</h2>
+              <p className="text-gray-400 text-base leading-relaxed mb-6">Behind every placement is a DHC consultant who genuinely cares. We've been building careers and teams across Singapore and Southeast Asia since 2012 — part of the Elitez Group with 9 offices across 5 SEA markets.</p>
+              <div className="flex flex-wrap gap-2 mb-8">
                 {["🇸🇬 Singapore", "🇲🇾 Malaysia", "🇮🇩 Indonesia", "🇹🇭 Thailand", "🇻🇳 Vietnam"].map((c) => (
-                  <span key={c} className="border border-[#0071ba]/30 bg-[#0071ba]/10 text-[#6798d0] text-sm font-semibold px-4 py-2 rounded-full">{c}</span>
+                  <span key={c} className="border border-[#0071ba]/30 bg-[#0071ba]/10 text-[#6798d0] text-xs font-semibold px-4 py-2 rounded-full">{c}</span>
                 ))}
               </div>
+              <a href="/about" className="inline-flex items-center gap-2 text-[#6798d0] font-bold hover:text-white transition-colors hover:gap-3 duration-200 text-sm">
+                Our Story →
+              </a>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-[#0071ba]/10">
-              <Image src="/hero1.png" alt="DHC Team" width={700} height={500} className="w-full h-auto object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/60 to-transparent" />
-              <div className="absolute bottom-6 left-6">
-                <span style={{ fontFamily: "'Syne', sans-serif" }} className="text-white font-black text-lg">The DHC Team</span>
-                <p className="text-gray-300 text-sm">Singapore &amp; Southeast Asia</p>
+              className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-[#0071ba]/10 group">
+              <Image src="/hero1.png" alt="DHC Team" width={700} height={500} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/80 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <div style={{ fontFamily: "'Syne', sans-serif" }} className="text-white font-black text-lg">The DHC Team</div>
+                <p className="text-gray-300 text-sm">Singapore & Southeast Asia · 9 Offices · 5 Markets</p>
               </div>
             </motion.div>
           </div>
@@ -230,24 +320,25 @@ export default function Home() {
 
       {/* SERVICES */}
       <section className="py-24 bg-[#020817] relative">
-        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
             <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">What We Do</span>
             <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-4xl md:text-5xl font-black text-white mb-4">Our Services</h2>
-            <p className="text-gray-500 text-lg max-w-xl">Full-spectrum HR solutions for Singapore&apos;s most ambitious organisations.</p>
+            <p className="text-gray-500 text-base max-w-xl">Full-spectrum HR solutions for Singapore's most ambitious organisations.</p>
           </motion.div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES.map((s, i) => (
               <motion.div key={s.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                className="group p-8 rounded-2xl border border-white/5 hover:border-[#0071ba]/40 hover:bg-[#0071ba]/5 transition-all duration-300 hover:-translate-y-1 cursor-default">
-                <div className="flex items-center justify-between mb-4">
+                className="group relative p-8 rounded-2xl border border-white/5 hover:border-[#0071ba]/50 bg-white/1 hover:bg-[#0071ba]/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#0071ba]/10 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#0071ba]/0 group-hover:bg-[#0071ba]/10 rounded-full blur-2xl transition-all duration-500 -translate-y-8 translate-x-8" />
+                <div className="flex items-start justify-between mb-4">
                   <span className="text-3xl">{s.icon}</span>
                   {s.tag && <span className="text-xs font-bold text-[#0071ba] border border-[#0071ba]/30 bg-[#0071ba]/10 px-2 py-1 rounded-full">{s.tag}</span>}
                 </div>
                 <h3 style={{ fontFamily: "'Syne', sans-serif" }} className="text-lg font-black text-white mb-2">{s.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed mb-4">{s.desc}</p>
-                <span className="text-xs text-[#6798d0] font-bold group-hover:text-white transition-colors">Learn more →</span>
+                <span className="text-xs text-[#6798d0] font-bold group-hover:text-white transition-colors flex items-center gap-1">Learn more <span className="group-hover:translate-x-1 transition-transform inline-block">→</span></span>
               </motion.div>
             ))}
           </div>
@@ -257,14 +348,41 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TESTIMONIALS */}
+      <section className="py-20 bg-[#030d1a] overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-12">
+            <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">What Clients Say</span>
+            <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-3xl md:text-4xl font-black text-white">Trusted. Proven. Recommended.</h2>
+          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div key={activeTestimonial} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}
+              className="bg-white/3 border border-white/8 rounded-3xl p-10 mb-6">
+              <div className="text-4xl text-[#0071ba] mb-4 font-serif">"</div>
+              <p className="text-gray-200 text-lg leading-relaxed mb-6 italic">{TESTIMONIALS[activeTestimonial].quote}</p>
+              <div>
+                <div className="text-white font-bold text-sm">{TESTIMONIALS[activeTestimonial].name}</div>
+                <div className="text-gray-500 text-xs">{TESTIMONIALS[activeTestimonial].company}</div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+          <div className="flex justify-center gap-2">
+            {TESTIMONIALS.map((_, i) => (
+              <button key={i} onClick={() => setActiveTestimonial(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === activeTestimonial ? "w-8 bg-[#0071ba]" : "w-4 bg-white/20"}`} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CLIENT LOGOS */}
-      <section className="py-16 bg-[#030d1a] overflow-hidden border-y border-white/5">
-        <div className="max-w-6xl mx-auto px-6 mb-10 text-center">
-          <p className="text-xs font-bold text-gray-600 tracking-widest uppercase">Trusted by Singapore&apos;s Leading Organisations</p>
+      <section className="py-16 bg-[#020817] overflow-hidden border-y border-white/5">
+        <div className="mb-8 text-center">
+          <p className="text-xs font-bold text-gray-600 tracking-widest uppercase">Trusted by Singapore's Leading Organisations</p>
         </div>
         <div className="flex gap-6 animate-marquee whitespace-nowrap">
           {[...CLIENTS, ...CLIENTS].map((c, i) => (
-            <div key={i} className="inline-flex items-center justify-center border border-white/8 rounded-xl px-8 py-4 text-sm font-bold text-gray-500 min-w-[200px] shrink-0 hover:text-gray-300 hover:border-white/20 transition-colors">{c}</div>
+            <div key={i} className="inline-flex items-center justify-center border border-white/8 rounded-xl px-8 py-4 text-sm font-bold text-gray-500 min-w-[200px] shrink-0 hover:text-gray-200 hover:border-[#0071ba]/30 transition-all duration-300">{c}</div>
           ))}
         </div>
       </section>
@@ -272,20 +390,26 @@ export default function Home() {
       {/* CTA */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/hero2.png" alt="CTA Background" fill className="object-cover object-center opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#020817] via-[#020817]/80 to-[#020817]" />
+          <Image src="/hero2.png" alt="CTA" fill className="object-cover object-center opacity-15" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020817] via-[#020817]/85 to-[#020817]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#020817] via-transparent to-[#020817]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#0071ba]/10 blur-[100px]" />
         </div>
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-6 block">Let's Work Together</span>
             <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
               Ready to hire<br />
               <span className="bg-gradient-to-r from-[#6798d0] via-white to-[#0071ba] bg-clip-text text-transparent">smarter?</span>
             </h2>
-            <p className="text-gray-400 text-xl mb-12">72-hour shortlist. MOM-compliant. Zero fuss. Our consultants are ready.</p>
+            <p className="text-gray-400 text-lg mb-12 max-w-xl mx-auto">72-hour shortlist. MOM-compliant. Zero fuss. Our consultants are standing by.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:career@dhc.com.sg" className="bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/30 text-lg">Get in Touch</a>
-              <a href="tel:+6560500777" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 transition-all hover:-translate-y-1 text-lg">+65 6050 0777</a>
+              <a href="mailto:career@dhc.com.sg" className="group bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/30 text-base flex items-center gap-2 justify-center">
+                Get in Touch <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+              <a href="tel:+6560500777" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 transition-all hover:-translate-y-1 text-base">
+                +65 6050 0777
+              </a>
             </div>
           </motion.div>
         </div>
@@ -297,7 +421,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-10 mb-12">
             <div className="md:col-span-2">
               <Image src="/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert mb-5" />
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mb-4">Singapore&apos;s trusted MOM-licensed recruitment partner since 2012. Part of Elitez Group.</p>
+              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mb-4">Dynamic Human Capital — Singapore's trusted MOM-licensed recruitment partner since 2012. Part of Elitez Group.</p>
               <span className="text-xs text-gray-700 border border-white/5 px-3 py-1 rounded-full">EA License: 12C5492</span>
             </div>
             <div>
@@ -313,12 +437,16 @@ export default function Home() {
                 <p>#03-08, Singapore 339407</p>
                 <a href="tel:+6560500777" className="hover:text-white transition-colors mt-1">+65 6050 0777</a>
                 <a href="mailto:info@dhc.com.sg" className="hover:text-white transition-colors">info@dhc.com.sg</a>
+                <a href="mailto:career@dhc.com.sg" className="hover:text-white transition-colors">career@dhc.com.sg</a>
               </div>
             </div>
           </div>
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-700 text-xs">© 2025 Dynamic Human Capital Pte Ltd. All rights reserved. · <a href="https://dhc.com.sg/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-400 transition-colors">Privacy Policy</a></p>
-            <p className="text-gray-700 text-xs">Part of <a href="https://elitez.asia" target="_blank" rel="noopener noreferrer" className="text-[#6798d0]/60 hover:text-[#6798d0] transition-colors">Elitez Group</a></p>
+            <p className="text-gray-700 text-xs">© 2025 Dynamic Human Capital Pte Ltd. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <a href="https://dhc.com.sg/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">Privacy Policy</a>
+              <span className="text-gray-700 text-xs">Part of <a href="https://elitez.asia" target="_blank" rel="noopener noreferrer" className="text-[#6798d0]/60 hover:text-[#6798d0] transition-colors">Elitez Group</a></span>
+            </div>
           </div>
         </div>
       </footer>
