@@ -1,7 +1,7 @@
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-[#0a0f1e] text-white px-6 py-16 max-w-4xl mx-auto">
-      <a href="/DHCwebsite/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
+      <a href="/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
       <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
       <p className="text-gray-400 mb-2">Dynamic Human Capital Pte Ltd</p>
       <p className="text-gray-500 text-sm mb-10">Effective: 30 September 2023 · Last Updated: 4 August 2024</p>

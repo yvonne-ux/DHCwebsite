@@ -3,7 +3,7 @@ export default function About() {
     <main style={{fontFamily:"'DM Sans',sans-serif"}} className="bg-[#020817] text-white min-h-screen">
       <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:"linear-gradient(rgba(0,113,186,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,113,186,0.04) 1px,transparent 1px)",backgroundSize:"60px 60px"}} />
       <div className="max-w-6xl mx-auto px-6 pt-28 pb-20 relative z-10">
-        <a href="/DHCwebsite/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
+        <a href="/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
         <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
           <div>
             <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">Est. 2012</span>
@@ -12,7 +12,7 @@ export default function About() {
             <p className="text-gray-400 leading-relaxed">From permanent placement to workforce transformation, we connect Singapore's top organisations with exceptional talent. Our consultants are industry specialists who deliver quality, speed, and compliance — every time.</p>
           </div>
           <div className="relative rounded-3xl overflow-hidden border border-white/10">
-            <img src="/DHCwebsite/hero1.png" alt="DHC Team" className="w-full h-auto object-cover" />
+            <img src="/hero1.png" alt="DHC Team" className="w-full h-auto object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/60 to-transparent" />
             <div className="absolute bottom-6 left-6">
               <div style={{fontFamily:"'Syne',sans-serif"}} className="text-white font-black text-lg">The DHC Team</div>
@@ -52,7 +52,7 @@ export default function About() {
           <p className="text-gray-400 mb-6">Whether you're hiring or looking for your next role, we're here to help.</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a href="mailto:career@dhc.com.sg" className="bg-[#0071ba] text-white font-bold px-8 py-3.5 rounded-full hover:bg-[#005a96] transition-all">Get in Touch →</a>
-            <a href="/DHCwebsite/services" className="border border-white/20 text-white font-bold px-8 py-3.5 rounded-full hover:bg-white/5 transition-all">Our Services →</a>
+            <a href="/services" className="border border-white/20 text-white font-bold px-8 py-3.5 rounded-full hover:bg-white/5 transition-all">Our Services →</a>
           </div>
         </div>
       </div>
