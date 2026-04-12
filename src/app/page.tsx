@@ -485,7 +485,7 @@ export default function Home() {
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-700 text-xs">© 2025 Dynamic Human Capital Pte Ltd. All rights reserved. · EA Licence No: 12C6253</p>
             <div className="flex items-center gap-4">
-              <a href="https://dhc.com.sg/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">Privacy Policy</a>
+              <a href="/DHCwebsite/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">Privacy Policy</a>
               <span className="text-gray-700 text-xs">Part of <a href="https://elitez.asia" target="_blank" rel="noopener noreferrer" className="text-[#6798d0]/60 hover:text-[#6798d0] transition-colors">Elitez Group</a></span>
             </div>
           </div>
