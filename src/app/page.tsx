@@ -445,7 +445,7 @@ export default function Home() {
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:career@dhc.com.sg" className="group bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/40 text-base flex items-center gap-2 justify-center">
+              <a href="https://forms.gle/KYmBgNw5evS1Z7Ft8" className="group bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/40 text-base flex items-center gap-2 justify-center">
                 Get in Touch <span className="group-hover:translate-x-1 transition-transform">→</span>
               </a>
               <a href="mailto:career@dhc.com.sg" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 text-base">
