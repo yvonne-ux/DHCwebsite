@@ -449,7 +449,7 @@ export default function Home() {
                 Get in Touch <span className="group-hover:translate-x-1 transition-transform">→</span>
               </a>
               <a href="mailto:career@dhc.com.sg" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 text-base">
-                +65 6050 0777
+                career@dhc.com.sg
               </a>
             </div>
           </motion.div>
@@ -476,7 +476,7 @@ export default function Home() {
               <div className="flex flex-col gap-2 text-gray-600 text-sm">
                 <p>2 Kallang Ave, CT Hub</p>
                 <p>#03-08, Singapore 339407</p>
-                <a href="tel:+6560500777" className="hover:text-white transition-colors mt-1">+65 6050 0777</a>
+                <a href="mailto:career@dhc.com.sg" className="hover:text-white transition-colors mt-1">career@dhc.com.sg</a>
                 <a href="mailto:info@dhc.com.sg" className="hover:text-white transition-colors">info@dhc.com.sg</a>
                 <a href="mailto:career@dhc.com.sg" className="hover:text-white transition-colors">career@dhc.com.sg</a>
               </div>
