@@ -12,7 +12,7 @@ export default function Services() {
     <main style={{fontFamily:"'DM Sans',sans-serif"}} className="bg-[#020817] text-white min-h-screen">
       <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:"linear-gradient(rgba(0,113,186,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,113,186,0.04) 1px,transparent 1px)",backgroundSize:"60px 60px"}} />
       <div className="max-w-6xl mx-auto px-6 pt-28 pb-20 relative z-10">
-        <a href="/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
+        <a href="/DHCwebsite/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
         <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">What We Do</span>
         <h1 style={{fontFamily:"'Syne',sans-serif"}} className="text-5xl md:text-6xl font-black text-white mb-4">Our Services</h1>
         <p className="text-gray-400 text-lg max-w-2xl mb-16">Full-spectrum HR solutions for Singapore's most ambitious organisations. MOM-licensed, ISO-certified, trusted by 200+ companies.</p>

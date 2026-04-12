@@ -137,7 +137,7 @@ export default function Home() {
       {/* NAV */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#020817]/95 backdrop-blur-xl border-b border-white/5" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between py-4">
-          <a href="/" className="flex flex-col"><Image src="/DHCwebsite/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert" /><span className="text-[9px] text-[#6798d0] font-semibold tracking-[0.15em] uppercase mt-0.5 hidden md:block">Connecting Talents, Driving Dreams</span></a>
+          <a href="/DHCwebsite/" className="flex flex-col"><Image src="/DHCwebsite/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert" /><span className="text-[9px] text-[#6798d0] font-semibold tracking-[0.15em] uppercase mt-0.5 hidden md:block">Connecting Talents, Driving Dreams</span></a>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((l) => (
               <a key={l.label} href={l.href} className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200">{l.label}</a>
