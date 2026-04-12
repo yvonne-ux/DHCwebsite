@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     siteName: "Dynamic Human Capital",
     images: [
       {
-        url: "https://dhc.com.sg/hero2.png",
+        url: "https://dhc.com.sg/hero2.jpg",
         width: 1200,
         height: 630,
         alt: "Dynamic Human Capital",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dynamic Human Capital | Connecting Talents, Driving Dreams",
     description: "Singapore's MOM-licensed recruitment partner. 72-hour shortlist. ISO certified. CPF Registered. TAFEP Compliant.",
-    images: ["https://dhc.com.sg/hero2.png"],
+    images: ["https://dhc.com.sg/hero2.jpg"],
   },
 };
 
