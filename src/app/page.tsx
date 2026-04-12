@@ -5,11 +5,11 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 
 const NAV_LINKS = [
-  { label: "Services", href: "/DHCwebsite/services" },
-  { label: "Jobs", href: "/DHCwebsite/jobs" },
-  { label: "MOM Resources", href: "/DHCwebsite/mom-resources" },
-  { label: "About", href: "/DHCwebsite/about" },
-  { label: "Contact", href: "/DHCwebsite/contact" },
+  { label: "Services", href: "/services" },
+  { label: "Jobs", href: "/jobs" },
+  { label: "MOM Resources", href: "/mom-resources" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const STATS = [
