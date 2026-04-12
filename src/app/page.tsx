@@ -289,8 +289,13 @@ export default function Home() {
       </section>
 
       {/* TEAM SECTION */}
-      <section className="py-24 bg-[#030d1a]">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="py-16 bg-[#030d1a] relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#0071ba]/6 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#6798d0]/5 rounded-full blur-[80px]" />
+          <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.05) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+        </div>
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-4 block">Est. 2012</span>
@@ -319,8 +324,12 @@ export default function Home() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-24 bg-[#020817] relative">
-        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+      <section className="py-20 bg-[#020817] relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.06) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0071ba]/8 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#6798d0]/6 rounded-full blur-[100px]" />
+        </div>
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
             <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">What We Do</span>
@@ -349,20 +358,40 @@ export default function Home() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 bg-[#030d1a] overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-12">
+      <section className="relative py-14 overflow-hidden">
+        {/* Futuristic background */}
+        <div className="absolute inset-0 bg-[#030d1a]">
+          <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.06) 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0,113,186,0.12) 0%, transparent 70%)" }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[2px] bg-gradient-to-r from-transparent via-[#0071ba]/60 to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[2px] bg-gradient-to-r from-transparent via-[#0071ba]/60 to-transparent" />
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="absolute w-0.5 h-0.5 rounded-full bg-[#6798d0]/80 animate-ping"
+              style={{ left: `${10 + i * 12}%`, top: `${20 + (i % 3) * 30}%`, animationDelay: `${i * 0.4}s`, animationDuration: "3s" }} />
+          ))}
+        </div>
+        <div className="relative max-w-4xl mx-auto px-6 text-center z-10">
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-10">
             <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">What Clients Say</span>
-            <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-3xl md:text-4xl font-black text-white">Trusted. Proven. Recommended.</h2>
+            <h2 style={{ fontFamily: "'Syne', sans-serif" }} className="text-3xl md:text-5xl font-black text-white">Trusted. Proven.<br/>Recommended.</h2>
           </motion.div>
           <AnimatePresence mode="wait">
             <motion.div key={activeTestimonial} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}
-              className="bg-white/3 border border-white/8 rounded-3xl p-10 mb-6">
-              <div className="text-4xl text-[#0071ba] mb-4 font-serif">"</div>
-              <p className="text-gray-200 text-lg leading-relaxed mb-6 italic">{TESTIMONIALS[activeTestimonial].quote}</p>
-              <div>
-                <div className="text-white font-bold text-sm">{TESTIMONIALS[activeTestimonial].name}</div>
-                <div className="text-gray-500 text-xs">{TESTIMONIALS[activeTestimonial].company}</div>
+              className="relative bg-gradient-to-br from-[#0a1628]/90 to-[#020817]/90 border border-[#0071ba]/25 rounded-3xl p-10 mb-6 backdrop-blur-sm overflow-hidden">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-[#0071ba] to-transparent" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#0071ba]/10 rounded-full blur-2xl" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#6798d0]/8 rounded-full blur-xl" />
+              <div className="relative z-10">
+                <div className="text-4xl text-[#0071ba] mb-4 font-serif leading-none">"</div>
+                <p className="text-gray-200 text-lg leading-relaxed mb-6 italic">{TESTIMONIALS[activeTestimonial].quote}</p>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-8 h-px bg-[#0071ba]/50" />
+                  <div>
+                    <div className="text-white font-bold text-sm">{TESTIMONIALS[activeTestimonial].name}</div>
+                    <div className="text-[#6798d0] text-xs">{TESTIMONIALS[activeTestimonial].company}</div>
+                  </div>
+                  <div className="w-8 h-px bg-[#0071ba]/50" />
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -382,19 +411,22 @@ export default function Home() {
         </div>
         <div className="flex gap-6 animate-marquee whitespace-nowrap">
           {[...CLIENTS, ...CLIENTS].map((c, i) => (
-            <div key={i} className="inline-flex items-center justify-center border border-white/8 rounded-xl px-8 py-4 text-sm font-bold text-gray-500 min-w-[200px] shrink-0 hover:text-gray-200 hover:border-[#0071ba]/30 transition-all duration-300">{c}</div>
+            <div key={i} className="inline-flex items-center justify-center border border-white/10 bg-white/3 rounded-xl px-8 py-4 text-sm font-bold text-gray-400 min-w-[200px] shrink-0 hover:text-white hover:border-[#0071ba]/50 hover:bg-[#0071ba]/10 transition-all duration-300">{c}</div>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-24 overflow-hidden bg-[#020817]">
         <div className="absolute inset-0">
-          <Image src="/hero2.png" alt="CTA" fill className="object-cover object-center opacity-15" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#020817] via-[#020817]/85 to-[#020817]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020817] via-transparent to-[#020817]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#0071ba]/10 blur-[100px]" />
+          <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(0,113,186,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,186,0.08) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,113,186,0.18) 0%, transparent 70%)" }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#0071ba]/15 blur-[100px] animate-pulse" />
+          <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] rounded-full bg-[#6798d0]/10 blur-[80px] animate-pulse" style={{animationDelay:"1s"}} />
+          <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] rounded-full bg-[#0071ba]/10 blur-[60px] animate-pulse" style={{animationDelay:"2s"}} />
         </div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0071ba]/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0071ba]/60 to-transparent" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-6 block">Let's Work Together</span>
@@ -402,12 +434,21 @@ export default function Home() {
               Ready to hire<br />
               <span className="bg-gradient-to-r from-[#6798d0] via-white to-[#0071ba] bg-clip-text text-transparent">smarter?</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-12 max-w-xl mx-auto">72-hour shortlist. MOM-compliant. Zero fuss. Our consultants are standing by.</p>
+            <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">72-hour shortlist. MOM-compliant. Zero fuss.</p>
+            <div className="flex flex-wrap justify-center gap-8 mb-10">
+              {[["⚡","72hr","Shortlist"],["✅","MOM","Licensed"],["🌏","5","SEA Markets"],["⭐","98%","Retention"]].map(([icon,val,label]) => (
+                <div key={label} className="flex flex-col items-center gap-1">
+                  <span className="text-2xl">{icon}</span>
+                  <span style={{ fontFamily: "'Syne', sans-serif" }} className="text-white font-black text-xl leading-none">{val}</span>
+                  <span className="text-gray-500 text-xs tracking-widest uppercase">{label}</span>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:career@dhc.com.sg" className="group bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/30 text-base flex items-center gap-2 justify-center">
+              <a href="mailto:career@dhc.com.sg" className="group bg-[#0071ba] text-white font-black px-12 py-4 rounded-full hover:bg-[#005a96] transition-all hover:-translate-y-1 shadow-2xl shadow-[#0071ba]/40 text-base flex items-center gap-2 justify-center">
                 Get in Touch <span className="group-hover:translate-x-1 transition-transform">→</span>
               </a>
-              <a href="tel:+6560500777" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 transition-all hover:-translate-y-1 text-base">
+              <a href="tel:+6560500777" className="border border-white/20 text-white font-bold px-12 py-4 rounded-full hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 text-base">
                 +65 6050 0777
               </a>
             </div>
@@ -422,7 +463,7 @@ export default function Home() {
             <div className="md:col-span-2">
               <Image src="/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert mb-5" />
               <p className="text-gray-600 text-sm leading-relaxed max-w-xs mb-4">Dynamic Human Capital — Singapore's trusted MOM-licensed recruitment partner since 2012. Part of Elitez Group.</p>
-              <span className="text-xs text-gray-700 border border-white/5 px-3 py-1 rounded-full">EA License: 12C5492</span>
+              <span className="text-xs text-gray-700 border border-white/5 px-3 py-1 rounded-full">EA License: 12C6253</span>
             </div>
             <div>
               <h4 className="text-white font-bold text-sm mb-5">Company</h4>
