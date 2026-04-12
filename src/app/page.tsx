@@ -7,7 +7,7 @@ import Image from "next/image";
 const NAV_LINKS = [
   { label: "Services", href: "/DHCwebsite/services" },
   { label: "Jobs", href: "/DHCwebsite/jobs" },
-  { label: "MOM Resources", href: "/mom-resources" },
+  { label: "MOM Resources", href: "/DHCwebsite/mom-resources" },
   { label: "About", href: "/DHCwebsite/about" },
   { label: "Contact", href: "/DHCwebsite/contact" },
 ];
