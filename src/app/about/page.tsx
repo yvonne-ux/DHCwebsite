@@ -12,7 +12,7 @@ export default function About() {
             <p className="text-gray-400 leading-relaxed">From permanent placement to workforce transformation, we connect Singapore's top organisations with exceptional talent. Our consultants are industry specialists who deliver quality, speed, and compliance — every time.</p>
           </div>
           <div className="relative rounded-3xl overflow-hidden border border-white/10">
-            <img src="/DHCwebsite/hero1.png" alt="DHC Team" className="w-full h-auto object-cover" />
+            <img src="/hero1.png" alt="DHC Team" className="w-full h-auto object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/60 to-transparent" />
             <div className="absolute bottom-6 left-6">
               <div style={{fontFamily:"'Syne',sans-serif"}} className="text-white font-black text-lg">The DHC Team</div>

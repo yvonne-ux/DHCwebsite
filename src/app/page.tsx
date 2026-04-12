@@ -118,9 +118,9 @@ export default function Home() {
   }, []);
 
   const slides = [
-    { img: "/DHCwebsite/hero2.png", label: "For Candidates", title: "Your Next Career Move", sub: "Thousands of roles across Singapore & SEA." },
-    { img: "/DHCwebsite/hero4.png", label: "For Employers", title: "Hire Smarter. Move Faster.", sub: "MOM-licensed. ISO certified. 72-hour shortlist." },
-    { img: "/DHCwebsite/hero3.png", label: "Our Promise", title: "People First. Always.", sub: "Where human connection meets smart recruitment." },
+    { img: "/hero2.png", label: "For Candidates", title: "Your Next Career Move", sub: "Thousands of roles across Singapore & SEA." },
+    { img: "/hero4.png", label: "For Employers", title: "Hire Smarter. Move Faster.", sub: "MOM-licensed. ISO certified. 72-hour shortlist." },
+    { img: "/hero3.png", label: "Our Promise", title: "People First. Always.", sub: "Where human connection meets smart recruitment." },
   ];
 
   return (
@@ -137,7 +137,7 @@ export default function Home() {
       {/* NAV */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#020817]/95 backdrop-blur-xl border-b border-white/5" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between py-4">
-          <a href="/" className="flex flex-col"><Image src="/DHCwebsite/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert" /><span className="text-[9px] text-[#6798d0] font-semibold tracking-[0.15em] uppercase mt-0.5 hidden md:block">Connecting Talents, Driving Dreams</span></a>
+          <a href="/" className="flex flex-col"><Image src="/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert" /><span className="text-[9px] text-[#6798d0] font-semibold tracking-[0.15em] uppercase mt-0.5 hidden md:block">Connecting Talents, Driving Dreams</span></a>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((l) => (
               <a key={l.label} href={l.href} className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200">{l.label}</a>
@@ -248,7 +248,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="group relative overflow-hidden rounded-3xl border border-white/8 hover:border-[#0071ba]/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#0071ba]/10">
               <div className="relative h-64 overflow-hidden">
-                <Image src="/DHCwebsite/hero4.png" alt="For Candidates" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+                <Image src="/hero4.png" alt="For Candidates" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/50 to-transparent" />
                 <div className="absolute top-4 left-4 bg-[#0071ba]/20 border border-[#0071ba]/40 text-[#6798d0] text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-widest">FOR CANDIDATES</div>
               </div>
@@ -271,7 +271,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="group relative overflow-hidden rounded-3xl border border-white/8 hover:border-[#0071ba]/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#0071ba]/10">
               <div className="relative h-64 overflow-hidden">
-                <Image src="/DHCwebsite/hero3.png" alt="For Employers" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+                <Image src="/hero3.png" alt="For Employers" fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/50 to-transparent" />
                 <div className="absolute top-4 left-4 bg-[#0071ba]/20 border border-[#0071ba]/40 text-[#6798d0] text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-widest">FOR EMPLOYERS</div>
               </div>
@@ -312,7 +312,7 @@ export default function Home() {
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-[#0071ba]/10 group">
-              <Image src="/DHCwebsite/hero1.png" alt="DHC Team" width={700} height={500} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/hero1.png" alt="DHC Team" width={700} height={500} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/80 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div style={{ fontFamily: "'Syne', sans-serif" }} className="text-white font-black text-lg">The DHC Team</div>
@@ -461,7 +461,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-10 mb-12">
             <div className="md:col-span-2">
-              <Image src="/DHCwebsite/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert mb-5" />
+              <Image src="/dhc-logo.png" alt="DHC" width={130} height={44} className="h-10 w-auto object-contain brightness-0 invert mb-5" />
               <p className="text-gray-600 text-sm leading-relaxed max-w-xs mb-4">Dynamic Human Capital — Singapore's trusted MOM-licensed recruitment partner since 2012. Part of Elitez Group.</p>
               <span className="text-xs text-gray-700 border border-white/5 px-3 py-1 rounded-full">EA License: 12C6253</span>
             </div>
