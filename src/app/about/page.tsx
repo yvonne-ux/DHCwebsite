@@ -1,61 +1,201 @@
-export default function About() {
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Dynamic Human Capital — Singapore's MOM-licensed recruitment partner since 2012. Part of the Elitez Group with offices across Southeast Asia.",
+  alternates: { canonical: "/about" },
+};
+
+const WHY_DHC: { icon: string; title: string; desc: string }[] = [
+  {
+    icon: "🏛️",
+    title: "MOM Licensed",
+    desc: "Fully accredited by Singapore's Ministry of Manpower. EA License: 12C6253. We operate with full compliance and transparency.",
+  },
+  {
+    icon: "🌏",
+    title: "Part of Elitez Group",
+    desc: "Backed by a regional HR conglomerate with offices across Singapore, Malaysia, Indonesia, Thailand, and Vietnam.",
+  },
+  {
+    icon: "⭐",
+    title: "ISO Certified",
+    desc: "ISO certified and TAFEP compliant. We uphold the highest standards of fair employment practices.",
+  },
+  {
+    icon: "⚡",
+    title: "72-Hour Shortlist",
+    desc: "Average 72-hour shortlist turnaround. Industry-specialist recruiters, not generalists. Speed without compromising quality.",
+  },
+  {
+    icon: "🤝",
+    title: "Dedicated Account Manager",
+    desc: "Every client gets a dedicated consultant who understands your business, culture, and hiring needs.",
+  },
+  {
+    icon: "💡",
+    title: "Replacement Guarantee",
+    desc: "We stand behind every placement. Replacement guarantee on permanent placements for your peace of mind.",
+  },
+];
+
+export default function AboutPage() {
   return (
-    <main style={{fontFamily:"'DM Sans',sans-serif"}} className="bg-[#020817] text-white min-h-screen">
-      <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:"linear-gradient(rgba(0,113,186,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,113,186,0.04) 1px,transparent 1px)",backgroundSize:"60px 60px"}} />
-      <div className="max-w-6xl mx-auto px-6 pt-28 pb-20 relative z-10">
-        <a href="/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block">← Back to Home</a>
-        <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
+    <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
+      {/* Minimal header */}
+      <header className="border-b border-[#EAEDF3] bg-white">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+          <Link
+            href="/"
+            className="flex items-center"
+            aria-label="Dynamic Human Capital — home"
+          >
+            <Image
+              src="/dhc-logo.png"
+              alt="Dynamic Human Capital"
+              width={130}
+              height={44}
+              priority
+              className="h-9 w-auto object-contain"
+            />
+          </Link>
+          <nav aria-label="Breadcrumb" className="text-sm text-[#5b6478]">
+            <Link href="/" className="transition-colors hover:text-[#0071ba]">
+              Home
+            </Link>
+            <span className="mx-2 text-[#cbd5e1]" aria-hidden="true">
+              /
+            </span>
+            <span className="font-medium text-[#020817]">About</span>
+          </nav>
+        </div>
+      </header>
+
+      {/* Centred intro */}
+      <section className="mx-auto max-w-6xl px-6 pb-10 pt-14 text-center md:pt-20">
+        <span className="text-sm font-semibold uppercase tracking-widest text-[#0071ba]">
+          Est. 2012
+        </span>
+        <h1 className="mt-4 font-sans text-4xl font-bold leading-tight text-[#020817] md:text-5xl">
+          Connecting Talents, Driving Dreams
+        </h1>
+        <p className="mx-auto mt-5 max-w-[620px] text-lg leading-relaxed text-[#5b6478]">
+          Singapore&apos;s MOM-licensed recruitment partner since 2012. Part of
+          the Elitez Group, with offices across Southeast Asia.
+        </p>
+        <div
+          className="mx-auto mt-10 h-px w-32 bg-gradient-to-r from-transparent via-[#0071ba]/50 to-transparent"
+          aria-hidden="true"
+        />
+      </section>
+
+      {/* Company description + team image */}
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-20">
+        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
           <div>
-            <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">Est. 2012</span>
-            <h1 style={{fontFamily:"'Syne',sans-serif"}} className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">Connecting Talents,<br/>Driving Dreams</h1>
-            <p className="text-gray-400 text-lg leading-relaxed mb-6">Dynamic Human Capital (DHC) is a MOM-licensed Singapore recruitment agency established in 2012. We are part of Elitez Group — one of Southeast Asia's leading HR conglomerates with 9 offices across 5 markets.</p>
-            <p className="text-gray-400 leading-relaxed">From permanent placement to workforce transformation, we connect Singapore's top organisations with exceptional talent. Our consultants are industry specialists who deliver quality, speed, and compliance — every time.</p>
+            <h2 className="font-sans text-2xl font-bold text-[#020817] md:text-3xl">
+              People-first recruitment, across Southeast Asia.
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-[#5b6478]">
+              Dynamic Human Capital (DHC) is a MOM-licensed Singapore
+              recruitment agency established in 2012. We are part of Elitez
+              Group — one of Southeast Asia&apos;s leading HR conglomerates with
+              9 offices across 5 markets.
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-[#5b6478]">
+              From permanent placement to workforce transformation, we connect
+              Singapore&apos;s top organisations with exceptional talent. Our
+              consultants are industry specialists who deliver quality, speed,
+              and compliance — every time.
+            </p>
           </div>
-          <div className="relative rounded-3xl overflow-hidden border border-white/10">
-            <img src="/hero1.png" alt="DHC Team" className="w-full h-auto object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/60 to-transparent" />
-            <div className="absolute bottom-6 left-6">
-              <div style={{fontFamily:"'Syne',sans-serif"}} className="text-white font-black text-lg">The DHC Team</div>
-              <p className="text-gray-300 text-sm">Singapore & Southeast Asia</p>
+          <div className="relative overflow-hidden rounded-xl border border-[#E6E9F2] shadow-[0_8px_28px_rgba(2,8,23,0.08)]">
+            <Image
+              src="/hero1.png"
+              alt="The DHC team — Singapore &amp; Southeast Asia"
+              width={720}
+              height={520}
+              className="h-auto w-full object-cover"
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#020817]/55 to-transparent"
+              aria-hidden="true"
+            />
+            <div className="absolute bottom-5 left-5 right-5">
+              <div className="font-sans text-base font-semibold text-white">
+                The DHC Team
+              </div>
+              <p className="mt-0.5 text-sm text-white/85">
+                Singapore &amp; Southeast Asia
+              </p>
             </div>
           </div>
         </div>
-        <div className="grid md:grid-cols-4 gap-6 mb-20">
-          {[["5,000+","Placements Made"],["12+","Years Experience"],["98%","Client Retention"],["72hr","Shortlist Turnaround"]].map(([val,label]) => (
-            <div key={label} className="text-center p-6 rounded-2xl border border-white/8 bg-white/2">
-              <div style={{fontFamily:"'Syne',sans-serif"}} className="text-4xl font-black text-[#0071ba] mb-1">{val}</div>
-              <div className="text-gray-400 text-sm">{label}</div>
-            </div>
+      </section>
+
+      {/* Why DHC? */}
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-20">
+        <div className="text-center">
+          <span className="text-sm font-semibold uppercase tracking-widest text-[#0071ba]">
+            Why DHC
+          </span>
+          <h2 className="mt-3 font-sans text-3xl font-bold text-[#020817] md:text-4xl">
+            What sets us apart
+          </h2>
+        </div>
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {WHY_DHC.map((item) => (
+            <article
+              key={item.title}
+              className="group flex flex-col rounded-xl border border-[#E6E9F2] bg-white p-6 shadow-[0_4px_24px_rgba(2,8,23,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#0071ba]/40 hover:shadow-[0_16px_40px_rgba(2,8,23,0.10)]"
+            >
+              <span className="text-3xl leading-none" aria-hidden="true">
+                {item.icon}
+              </span>
+              <h3 className="mt-4 font-sans text-lg font-semibold text-[#020817]">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#5b6478]">
+                {item.desc}
+              </p>
+            </article>
           ))}
         </div>
-        <div className="mb-20">
-          <h2 style={{fontFamily:"'Syne',sans-serif"}} className="text-3xl font-black text-white mb-8">Why DHC?</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {icon:"🏛️",title:"MOM Licensed",desc:"Fully accredited by Singapore's Ministry of Manpower. EA License: 12C6253. We operate with full compliance and transparency."},
-              {icon:"🌏",title:"Part of Elitez Group",desc:"Backed by a regional HR conglomerate with offices across Singapore, Malaysia, Indonesia, Thailand, and Vietnam."},
-              {icon:"⭐",title:"ISO Certified",desc:"ISO certified and TAFEP compliant. We uphold the highest standards of fair employment practices."},
-              {icon:"⚡",title:"72-Hour Shortlist",desc:"Average 72-hour shortlist turnaround. Industry-specialist recruiters, not generalists. Speed without compromising quality."},
-              {icon:"🤝",title:"Dedicated Account Manager",desc:"Every client gets a dedicated consultant who understands your business, culture, and hiring needs."},
-              {icon:"💡",title:"Replacement Guarantee",desc:"We stand behind every placement. Replacement guarantee on permanent placements for your peace of mind."},
-            ].map((item) => (
-              <div key={item.title} className="p-6 rounded-2xl border border-white/8 hover:border-[#0071ba]/40 hover:bg-[#0071ba]/5 transition-all">
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <h3 style={{fontFamily:"'Syne',sans-serif"}} className="text-lg font-black text-white mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="mx-auto max-w-3xl px-6 pb-12 md:pb-16">
+        <div className="rounded-xl border border-[#E6E9F2] border-l-4 border-l-[#0071ba] bg-white p-10 text-center shadow-[0_4px_24px_rgba(2,8,23,0.05)]">
+          <h2 className="font-sans text-2xl font-bold text-[#020817] md:text-3xl">
+            Ready to work with us?
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-[#5b6478]">
+            Whether you&apos;re hiring or looking for your next role,
+            we&apos;re here to help.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="mailto:career@dhc.com.sg"
+              className="group inline-flex items-center gap-2 rounded-xl bg-[#0071ba] px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-xl hover:shadow-[#0071ba]/30"
+            >
+              Get in Touch
+              <span className="transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </a>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#020817]/10 bg-white px-7 py-3.5 text-sm font-bold text-[#020817] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0071ba] hover:text-[#0071ba]"
+            >
+              Our Services
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
-        <div className="p-10 rounded-3xl border border-[#0071ba]/20 bg-[#0071ba]/5 text-center">
-          <h3 style={{fontFamily:"'Syne',sans-serif"}} className="text-2xl font-black text-white mb-3">Ready to work with us?</h3>
-          <p className="text-gray-400 mb-6">Whether you're hiring or looking for your next role, we're here to help.</p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a href="mailto:career@dhc.com.sg" className="bg-[#0071ba] text-white font-bold px-8 py-3.5 rounded-full hover:bg-[#005a96] transition-all">Get in Touch →</a>
-            <a href="/services" className="border border-white/20 text-white font-bold px-8 py-3.5 rounded-full hover:bg-white/5 transition-all">Our Services →</a>
-          </div>
-        </div>
-      </div>
+      </section>
     </main>
   );
 }

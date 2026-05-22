@@ -1,38 +1,185 @@
-export default function Jobs() {
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import JobsListing from "./_components/JobsListing";
+
+export const metadata: Metadata = {
+  title: "Open Jobs",
+  description:
+    "Browse open roles across Singapore and Southeast Asia with Dynamic Human Capital. Search MyCareersFuture and JobStreet, or apply to featured roles directly.",
+  alternates: { canonical: "/jobs" },
+};
+
+const MYCAREERSFUTURE_URL =
+  "https://www.mycareersfuture.gov.sg/search?search=dynamic+human+capital&sortBy=new_posting_date";
+const JOBSTREET_URL =
+  "https://www.jobstreet.com.sg/jobs?q=Dynamic+Human+Capital&sortmode=ListedDate";
+
+/* ---------- portal card ---------- */
+
+type PortalCardProps = {
+  accentBg: string;
+  accentRing: string;
+  emoji: string;
+  badgeLabel: string;
+  name: string;
+  description: string;
+  cta: string;
+  href: string;
+};
+
+function PortalCard({
+  accentBg,
+  accentRing,
+  emoji,
+  badgeLabel,
+  name,
+  description,
+  cta,
+  href,
+}: PortalCardProps) {
   return (
-    <main style={{fontFamily:"'DM Sans',sans-serif"}} className="bg-[#020817] text-white min-h-screen">
-      <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:"linear-gradient(rgba(0,113,186,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,113,186,0.04) 1px,transparent 1px)",backgroundSize:"60px 60px"}} />
-      <div className="max-w-4xl mx-auto px-6 pt-28 pb-20 relative z-10 text-center">
-        <a href="/" className="text-[#6798d0] text-sm hover:text-white transition-colors mb-8 block text-left">← Back to Home</a>
-        <span className="text-xs font-bold text-[#6798d0] tracking-widest uppercase mb-3 block">Career Opportunities</span>
-        <h1 style={{fontFamily:"'Syne',sans-serif"}} className="text-5xl md:text-6xl font-black text-white mb-4">Find Your Dream Job</h1>
-        <p className="text-gray-400 text-lg mb-16 max-w-2xl mx-auto">Explore thousands of roles across Singapore and Southeast Asia. Browse our latest openings on Singapore's top job platforms.</p>
-        <div className="grid md:grid-cols-2 gap-6 text-left mb-16">
-          <a href="https://www.mycareersfuture.gov.sg/search?search=dynamic+human+capital&sortBy=new_posting_date" target="_blank" rel="noopener noreferrer"
-            className="group p-8 rounded-2xl border border-white/8 hover:border-[#0071ba]/50 hover:bg-[#0071ba]/5 transition-all duration-300 hover:-translate-y-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center text-xl">🇸🇬</div>
-              <div><div style={{fontFamily:"'Syne',sans-serif"}} className="font-black text-white">MyCareersFuture</div><div className="text-xs text-gray-500">Government Jobs Portal</div></div>
-            </div>
-            <p className="text-gray-400 text-sm mb-4">Singapore's national jobs portal by NTUC and the government. Browse current DHC-posted roles across all industries.</p>
-            <span className="text-[#6798d0] font-bold text-sm group-hover:text-white transition-colors">Browse Jobs →</span>
-          </a>
-          <a href="https://www.jobstreet.com.sg/jobs?q=Dynamic+Human+Capital&sortmode=ListedDate" target="_blank" rel="noopener noreferrer"
-            className="group p-8 rounded-2xl border border-white/8 hover:border-[#0071ba]/50 hover:bg-[#0071ba]/5 transition-all duration-300 hover:-translate-y-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-xl">🌏</div>
-              <div><div style={{fontFamily:"'Syne',sans-serif"}} className="font-black text-white">JobStreet</div><div className="text-xs text-gray-500">Regional Job Platform</div></div>
-            </div>
-            <p className="text-gray-400 text-sm mb-4">Southeast Asia's leading job platform. Discover DHC opportunities for fresh graduates and experienced professionals.</p>
-            <span className="text-[#6798d0] font-bold text-sm group-hover:text-white transition-colors">Browse Jobs →</span>
-          </a>
+    <article className="group flex flex-col rounded-xl border border-[#E6E9F2] bg-white p-8 shadow-[0_4px_24px_rgba(2,8,23,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#0071ba]/40 hover:shadow-[0_16px_40px_rgba(2,8,23,0.10)]">
+      <div className="flex items-center gap-4">
+        <div
+          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border text-2xl ${accentBg} ${accentRing}`}
+          aria-hidden="true"
+        >
+          {emoji}
         </div>
-        <div className="p-8 rounded-3xl border border-[#0071ba]/20 bg-[#0071ba]/5">
-          <h3 style={{fontFamily:"'Syne',sans-serif"}} className="text-xl font-black text-white mb-2">Can't find the right role?</h3>
-          <p className="text-gray-400 text-sm mb-5">Send us your CV and our consultants will match you with the right opportunity.</p>
-          <a href="mailto:career@dhc.com.sg" className="inline-flex items-center gap-2 bg-[#0071ba] text-white font-bold px-8 py-3 rounded-full hover:bg-[#005a96] transition-all text-sm">Send Your CV →</a>
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5b6478]">
+            {badgeLabel}
+          </p>
+          <h3 className="font-sans text-xl font-semibold leading-tight text-[#020817]">
+            Search on {name}
+          </h3>
         </div>
       </div>
+
+      <p className="mt-5 flex-1 text-base leading-relaxed text-[#5b6478]">
+        {description}
+      </p>
+
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group/btn mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0071ba] px-6 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-xl hover:shadow-[#0071ba]/30"
+      >
+        {cta}
+        <span className="transition-transform group-hover/btn:translate-x-1">
+          →
+        </span>
+      </a>
+    </article>
+  );
+}
+
+/* ---------- page ---------- */
+
+export default function JobsPage() {
+  return (
+    <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
+      {/* Minimal header */}
+      <header className="border-b border-[#EAEDF3] bg-white">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+          <Link
+            href="/"
+            className="flex items-center"
+            aria-label="Dynamic Human Capital — home"
+          >
+            <Image
+              src="/dhc-logo.png"
+              alt="Dynamic Human Capital"
+              width={130}
+              height={44}
+              priority
+              className="h-9 w-auto object-contain"
+            />
+          </Link>
+          <nav aria-label="Breadcrumb" className="text-sm text-[#5b6478]">
+            <Link href="/" className="transition-colors hover:text-[#0071ba]">
+              Home
+            </Link>
+            <span className="mx-2 text-[#cbd5e1]" aria-hidden="true">
+              /
+            </span>
+            <span className="font-medium text-[#020817]">Jobs</span>
+          </nav>
+        </div>
+      </header>
+
+      {/* Intro */}
+      <section className="mx-auto max-w-6xl px-6 pb-10 pt-14 text-center md:pt-20">
+        <span className="text-sm font-semibold uppercase tracking-widest text-[#0071ba]">
+          Find Your Next Role
+        </span>
+        <h1 className="mt-4 font-sans text-4xl font-bold leading-tight text-[#020817]">
+          Browse Open Roles
+        </h1>
+        <p className="mx-auto mt-5 max-w-[560px] text-lg leading-relaxed text-[#5b6478]">
+          Explore opportunities across Singapore and Southeast Asia. New roles
+          added daily.
+        </p>
+        <div
+          className="mx-auto mt-10 h-px w-32 bg-gradient-to-r from-transparent via-[#0071ba]/50 to-transparent"
+          aria-hidden="true"
+        />
+      </section>
+
+      {/* Portal cards */}
+      <section className="mx-auto max-w-6xl px-6 pb-14">
+        <div className="grid gap-6 md:grid-cols-2">
+          <PortalCard
+            accentBg="bg-red-50"
+            accentRing="border-red-200"
+            emoji="🇸🇬"
+            badgeLabel="Government Portal"
+            name="MyCareersFuture"
+            description="Browse all DHC-listed roles on Singapore's official government job portal — across every industry and seniority level."
+            cta="View All Jobs on MyCareersFuture"
+            href={MYCAREERSFUTURE_URL}
+          />
+          <PortalCard
+            accentBg="bg-blue-50"
+            accentRing="border-blue-200"
+            emoji="🌏"
+            badgeLabel="Regional Platform"
+            name="JobStreet"
+            description="Find DHC-managed roles across Singapore and Southeast Asia on JobStreet — the region's leading job platform."
+            cta="View All Jobs on JobStreet"
+            href={JOBSTREET_URL}
+          />
+        </div>
+      </section>
+
+      {/* Search + Featured Roles (interactive) */}
+      <section className="mx-auto max-w-6xl px-6 pb-16">
+        <JobsListing />
+      </section>
+
+      {/* Navy Quick Apply strip */}
+      <section className="bg-[#020817]">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-5 px-6 py-12 text-center md:flex-row md:justify-between md:gap-10 md:py-14 md:text-left">
+          <p className="text-lg leading-relaxed text-white/85 md:flex-1">
+            <span className="font-semibold text-white">
+              Can&apos;t find what you&apos;re looking for?
+            </span>{" "}
+            Send us your CV and we&apos;ll match you with the right
+            opportunity.
+          </p>
+          <Link
+            href="/contact"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#0071ba] px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-xl hover:shadow-[#0071ba]/40"
+          >
+            Submit Your CV
+            <span className="transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }
