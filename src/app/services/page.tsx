@@ -14,7 +14,7 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
       {/* Minimal header — logo + breadcrumb */}
-      <header className="border-b border-[#EAEDF3] bg-white">
+      <header className="sticky top-0 z-50 border-b border-[#EAEDF3] bg-white">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
           <Link
             href="/"
