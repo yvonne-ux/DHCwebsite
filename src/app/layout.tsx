@@ -13,7 +13,7 @@ const FOOTER_NAV = [
 ];
 
 const LINKEDIN_URL =
-  "https://www.linkedin.com/company/3648154/admin/dashboard/";
+  "https://www.linkedin.com/company/dynamic-human-capital-pte-ltd/";
 
 function SiteFooter() {
   return (
