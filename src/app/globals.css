@@ -37,6 +37,72 @@ h1, h2, h3, h4, h5, h6 {
   display: none;                  /* Chrome / Safari / WebKit */
 }
 
+/* ============================================================
+   MCF JOB DESCRIPTION
+   Applied to the dangerouslySetInnerHTML container in
+   JobAccordion. MCF returns rich text (ul/li/strong/p) that
+   tailwind preflight strips of all defaults; this restores
+   sensible spacing and styling for that subtree only.
+   ============================================================ */
+.prose-mcf {
+  overflow-wrap: anywhere;
+}
+.prose-mcf p {
+  margin: 0 0 0.75rem;
+}
+.prose-mcf p:last-child {
+  margin-bottom: 0;
+}
+.prose-mcf ul,
+.prose-mcf ol {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.25rem;
+}
+.prose-mcf ul {
+  list-style: disc;
+}
+.prose-mcf ol {
+  list-style: decimal;
+}
+.prose-mcf li {
+  margin-bottom: 0.35rem;
+  line-height: 1.55;
+}
+.prose-mcf li::marker {
+  color: #0071ba;
+}
+.prose-mcf strong,
+.prose-mcf b {
+  color: #020817;
+  font-weight: 600;
+}
+.prose-mcf em,
+.prose-mcf i {
+  font-style: italic;
+}
+.prose-mcf a {
+  color: #0071ba;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 113, 186, 0.35);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.15s ease;
+}
+.prose-mcf a:hover {
+  text-decoration-color: #0071ba;
+}
+.prose-mcf h1,
+.prose-mcf h2,
+.prose-mcf h3,
+.prose-mcf h4 {
+  color: #020817;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+}
+.prose-mcf img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ================================================================
    LOGO UNDERLINE — a thin line with a single bright comet that
    chases left -> right beneath the logo (replaces the chaser box).

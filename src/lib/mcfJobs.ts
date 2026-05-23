@@ -31,6 +31,7 @@ const mcfJobUrl = (uuid: string) =>
 type McfApiJob = {
   uuid: string;
   title: string;
+  description?: string;
   categories?: { category: string }[];
   employmentTypes?: { employmentType: string }[];
   salary?: {
@@ -61,6 +62,9 @@ export type NormalizedJob = {
   employmentType: string;
   postedDate: string | null;
   url: string;
+  // Pre-sanitised HTML — safe to render with dangerouslySetInnerHTML.
+  // Empty string when MCF didn't provide a description.
+  description: string;
 };
 
 export type McfFetchResult = {
@@ -93,6 +97,34 @@ function formatSalary(salary: McfApiJob["salary"]): string {
   return `S$${min ?? max} ${period}`.trim();
 }
 
+// Minimal HTML sanitiser for the MCF description field. MCF is a Singapore
+// government API publishing employer-authored copy — generally trustworthy
+// but we still strip anything that could execute or load remote content.
+// Safe tags pass through unchanged; .prose-mcf in globals.css styles them.
+function sanitizeHtml(raw: string): string {
+  if (!raw) return "";
+  return (
+    raw
+      // Drop scripts, styles, frames, forms and their inner content
+      .replace(
+        /<(script|style|iframe|object|embed|form|input|link|meta)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,
+        "",
+      )
+      // Drop the same as self-closing / void tags
+      .replace(
+        /<(script|style|iframe|object|embed|form|input|link|meta)\b[^>]*\/?>/gi,
+        "",
+      )
+      // Remove every inline event handler (onclick=, onerror=, …)
+      .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+      // Disarm javascript:/data: URLs on href/src
+      .replace(
+        /(href|src)\s*=\s*(["'])\s*(?:javascript|data|vbscript):[^"']*\2/gi,
+        '$1="#"',
+      )
+  );
+}
+
 function formatLocation(addr: McfApiJob["address"]): string {
   if (!addr) return "Singapore";
   if (addr.isOverseas && addr.overseasCountry) return addr.overseasCountry;
@@ -113,6 +145,7 @@ function normalize(j: McfApiJob): NormalizedJob {
     employmentType: j.employmentTypes?.[0]?.employmentType ?? "Full-time",
     postedDate: j.metadata?.newPostingDate ?? null,
     url: mcfJobUrl(j.uuid),
+    description: sanitizeHtml(j.description ?? ""),
   };
 }
 
