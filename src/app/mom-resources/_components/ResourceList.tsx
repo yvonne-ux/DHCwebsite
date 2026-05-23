@@ -143,7 +143,7 @@ export default function ResourceList() {
               aria-selected={isActive}
               onClick={() => setActive(c)}
               type="button"
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+              className={`inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                 isActive
                   ? "bg-[#0071ba] text-white shadow-md shadow-[#0071ba]/25"
                   : "border border-[#E6E9F2] bg-white text-[#5b6478] hover:-translate-y-0.5 hover:border-[#0071ba] hover:text-[#0071ba]"

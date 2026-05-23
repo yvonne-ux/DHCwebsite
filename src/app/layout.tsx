@@ -117,10 +117,14 @@ function SiteFooter() {
 }
 
 const SITE_URL = "https://dhc.com.sg";
-const OG_IMAGE =
-  "https://res.cloudinary.com/dzoygqrcz/image/upload/v1776039366/hero2_kptii8.jpg";
+const OG_IMAGE = "https://dhc.com.sg/og-image.png";
+// Long description — kept for general meta and structured data.
 const DESCRIPTION =
   "Singapore's MOM-licensed recruitment partner since 2012. 72-hour shortlist, ISO certified, CPF registered and TAFEP compliant. Permanent, contract, payroll and Employer of Record solutions across Southeast Asia.";
+// Short description tuned for share previews (WhatsApp, Telegram, LinkedIn).
+const OG_DESCRIPTION =
+  "Singapore's MOM-licensed recruitment partner since 2012. Permanent, contract and executive search across Southeast Asia.";
+const OG_TITLE = "Dynamic Human Capital | Singapore Recruitment Agency";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -147,8 +151,8 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   openGraph: {
-    title: "Dynamic Human Capital | Connecting Talents, Driving Dreams",
-    description: DESCRIPTION,
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
     url: SITE_URL,
     siteName: "Dynamic Human Capital",
     images: [
@@ -157,6 +161,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Dynamic Human Capital — Singapore's MOM-licensed recruitment partner",
+        type: "image/png",
       },
     ],
     locale: "en_SG",
@@ -164,8 +169,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dynamic Human Capital | Connecting Talents, Driving Dreams",
-    description: DESCRIPTION,
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
     images: [OG_IMAGE],
   },
 };

@@ -61,7 +61,7 @@ export default function EnquiryForm() {
   };
 
   const inputBase =
-    "w-full rounded-lg border border-[#E6E9F2] bg-white px-4 py-2.5 text-sm text-[#020817] placeholder:text-[#94a3b8] transition-colors focus:border-[#0071ba] focus:outline-none focus:ring-2 focus:ring-[#0071ba]/15";
+    "min-h-[44px] w-full rounded-lg border border-[#E6E9F2] bg-white px-4 py-3 text-sm text-[#020817] placeholder:text-[#94a3b8] transition-colors focus:border-[#0071ba] focus:outline-none focus:ring-2 focus:ring-[#0071ba]/15";
   const labelBase =
     "block text-xs font-semibold uppercase tracking-wider text-[#5b6478]";
 

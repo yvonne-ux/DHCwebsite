@@ -262,7 +262,7 @@ function JobRow({ job }: { job: Job }) {
         {/* Apply */}
         <a
           href={mailto}
-          className="group/btn inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#0071ba] px-4 py-2 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
+          className="group/btn inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg bg-[#0071ba] px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
         >
           Apply
           <span className="transition-transform group-hover/btn:translate-x-1">
@@ -298,7 +298,7 @@ export default function JobsListing() {
   const moreCount = Math.max(0, filtered.length - visible.length);
 
   const inputBase =
-    "w-full rounded-lg border border-[#E6E9F2] bg-white px-4 py-2.5 text-sm text-[#020817] placeholder:text-[#94a3b8] transition-colors focus:border-[#0071ba] focus:outline-none focus:ring-2 focus:ring-[#0071ba]/15";
+    "min-h-[44px] w-full rounded-lg border border-[#E6E9F2] bg-white px-4 py-3 text-sm text-[#020817] placeholder:text-[#94a3b8] transition-colors focus:border-[#0071ba] focus:outline-none focus:ring-2 focus:ring-[#0071ba]/15";
 
   return (
     <div>
@@ -343,7 +343,7 @@ export default function JobsListing() {
           </select>
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0071ba] px-6 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
+            className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#0071ba] px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
           >
             <SearchIcon />
             Search

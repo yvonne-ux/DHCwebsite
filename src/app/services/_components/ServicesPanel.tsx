@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Service = {
   icon: string;
@@ -88,6 +88,20 @@ export default function ServicesPanel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = SERVICES[activeIndex];
 
+  // Keep the active tab visible inside its scroll container.
+  // On mobile (horizontal pills) this slides the row to centre the active pill;
+  // on desktop (vertical list) this is a no-op since all tabs are already visible.
+  // Skip the first render so loading the page doesn't auto-scroll to the tabs section.
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    const el = document.getElementById(`service-tab-${activeIndex}`);
+    el?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [activeIndex]);
+
   const handleKeyDown = (e: React.KeyboardEvent, i: number) => {
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
@@ -104,12 +118,13 @@ export default function ServicesPanel() {
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-[280px_1fr]">
-      {/* ---- Left: vertical tab list ---- */}
+      {/* ---- Tabs ----
+         Mobile: edge-to-edge horizontal scroll of rounded pills.
+         Desktop (md+): vertical list inside a single card. */}
       <nav
         role="tablist"
-        aria-orientation="vertical"
         aria-label="Services"
-        className="overflow-hidden rounded-xl border border-[#E6E9F2] bg-white shadow-[0_4px_24px_rgba(2,8,23,0.04)]"
+        className="hide-scrollbar -mx-6 flex shrink-0 gap-2 overflow-x-auto px-6 pb-1 md:mx-0 md:block md:gap-0 md:overflow-visible md:rounded-xl md:border md:border-[#E6E9F2] md:bg-white md:px-0 md:pb-0 md:shadow-[0_4px_24px_rgba(2,8,23,0.04)]"
       >
         {SERVICES.map((s, i) => {
           const isActive = i === activeIndex;
@@ -124,16 +139,16 @@ export default function ServicesPanel() {
               tabIndex={isActive ? 0 : -1}
               onClick={() => setActiveIndex(i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
-              className={`flex w-full items-center gap-3 border-l-2 px-5 py-4 text-left text-sm transition-colors md:text-base ${
+              className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 text-sm transition-colors md:flex md:w-full md:gap-3 md:rounded-none md:border-0 md:border-l-2 md:px-5 md:py-4 md:text-left md:text-base ${
                 isActive
-                  ? "border-[#0071ba] bg-[#F7F8FC] font-semibold text-[#0071ba]"
-                  : "border-transparent font-medium text-[#5b6478] hover:bg-[#F7F8FC] hover:text-[#020817]"
+                  ? "border-[#0071ba] bg-[#0071ba] font-semibold text-white md:border-l-[#0071ba] md:bg-[#F7F8FC] md:text-[#0071ba]"
+                  : "border-[#E6E9F2] bg-white font-medium text-[#5b6478] md:border-l-transparent md:bg-transparent md:hover:bg-[#F7F8FC] md:hover:text-[#020817]"
               }`}
             >
-              <span className="text-lg leading-none" aria-hidden="true">
+              <span className="text-base leading-none md:text-lg" aria-hidden="true">
                 {s.icon}
               </span>
-              <span className="flex-1">{s.title}</span>
+              <span className="md:flex-1">{s.title}</span>
             </button>
           );
         })}

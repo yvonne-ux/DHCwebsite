@@ -67,7 +67,7 @@ export default function ScamBanner() {
           type="button"
           onClick={dismiss}
           aria-label="Dismiss scam warning"
-          className="shrink-0 rounded p-1.5 text-[#78350F]/70 transition-colors hover:bg-black/5 hover:text-[#78350F]"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded text-[#78350F]/70 transition-colors hover:bg-black/5 hover:text-[#78350F]"
         >
           <svg
             width="14"

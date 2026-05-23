@@ -981,14 +981,17 @@ export default function Home() {
               href={HIRE_FORM}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block whitespace-nowrap rounded-xl bg-[#0071ba] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
+              className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-xl bg-[#0071ba] px-5 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
             >
               Hire Talent
             </a>
             <button
+              type="button"
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex flex-col gap-1.5 p-2 lg:hidden"
-              aria-label="Toggle menu"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden"
             >
               <span className={`h-0.5 w-6 bg-[#020817] transition-all ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
               <span className={`h-0.5 w-6 bg-[#020817] transition-all ${menuOpen ? "opacity-0" : ""}`} />
@@ -999,13 +1002,17 @@ export default function Home() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="relative z-10 border-t border-[#E6E9F2] bg-white lg:hidden">
+          <div
+            id="mobile-menu"
+            className="relative z-10 border-t border-[#E6E9F2] bg-white lg:hidden"
+          >
             <div className="flex flex-col gap-1 px-6 py-4">
               {NAV_LINKS.map((l) => (
                 <a
                   key={l.label}
                   href={l.href}
-                  className="py-2 text-sm font-medium text-[#5b6478] transition-colors hover:text-[#0071ba]"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex min-h-[44px] items-center text-sm font-medium text-[#5b6478] transition-colors hover:text-[#0071ba]"
                 >
                   {l.label}
                 </a>
@@ -1014,7 +1021,8 @@ export default function Home() {
                 href={HIRE_FORM}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 rounded-xl bg-[#0071ba] px-5 py-3 text-center text-sm font-bold text-white"
+                onClick={() => setMenuOpen(false)}
+                className="mt-2 flex min-h-[44px] items-center justify-center rounded-xl bg-[#0071ba] px-5 py-3 text-center text-sm font-bold text-white"
               >
                 Hire Talent
               </a>
@@ -1027,7 +1035,7 @@ export default function Home() {
       <section className="relative bg-gradient-to-b from-white to-[#F0F4F8] px-6 pb-24 pt-16 md:pt-20">
         <div className="relative mx-auto flex max-w-4xl flex-col items-center text-center">
           {/* Headline — typewriter */}
-          <h1 className="hero-reveal flex min-h-[2.6em] items-center justify-center font-sans text-4xl font-bold leading-[1.08] tracking-tight text-[#020817] sm:text-5xl md:min-h-[2.2em] md:text-6xl">
+          <h1 className="hero-reveal flex min-h-[2.6em] items-center justify-center font-sans text-3xl font-bold leading-[1.08] tracking-tight text-[#020817] sm:text-4xl md:min-h-[2.2em] md:text-5xl lg:text-6xl">
             <span className="sr-only">
               Your next career move starts here — Dynamic Human Capital,
               Singapore&apos;s leading recruitment partner

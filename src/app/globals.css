@@ -27,6 +27,16 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
 }
 
+/* Hide horizontal scrollbar on the mobile services tab strip
+   (still scrollable via touch/wheel). */
+.hide-scrollbar {
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE/Edge legacy */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;                  /* Chrome / Safari / WebKit */
+}
+
 /* ================================================================
    LOGO UNDERLINE — a thin line with a single bright comet that
    chases left -> right beneath the logo (replaces the chaser box).
