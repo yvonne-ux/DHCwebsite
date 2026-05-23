@@ -9,23 +9,27 @@ const SUBJECTS = [
   "Press / partnership",
 ];
 
-export default function EnquiryForm() {
-  const [sending, setSending] = useState(false);
+// Formspree endpoint — submissions are forwarded to the configured inbox
+// from the Formspree dashboard.
+const FORMSPREE_URL = "https://formspree.io/f/mwvzqevd";
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+type Status = "idle" | "sending" | "success" | "error";
+
+export default function EnquiryForm() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.currentTarget;
     const data = new FormData(form);
     const name = ((data.get("name") as string) ?? "").trim();
     const email = ((data.get("email") as string) ?? "").trim();
-    const company = ((data.get("company") as string) ?? "").trim();
-    const subject = ((data.get("subject") as string) ?? "General enquiry").trim();
     const message = ((data.get("message") as string) ?? "").trim();
 
-    // Manual JS validation — we run noValidate on the form so the browser
-    // never shows native "Please fill in this field" balloons. Validation
-    // only fires when the user actually clicks Send.
+    // Manual JS validation — the form has noValidate so the browser never
+    // shows native "Please fill in this field" balloons. Validation only
+    // fires when the user actually clicks Send.
     const firstMissing = !name
       ? "name"
       : !email
@@ -42,22 +46,22 @@ export default function EnquiryForm() {
       return;
     }
 
-    setSending(true);
-    const mailSubject = `${subject} — Enquiry from ${name}`;
-    const mailBody =
-      `Name: ${name}\n` +
-      `Email: ${email}\n` +
-      `Company: ${company || "N/A"}\n` +
-      `Subject: ${subject}\n\n` +
-      `Message:\n${message}\n`;
-
-    const href =
-      `mailto:info@dhc.com.sg?subject=${encodeURIComponent(mailSubject)}` +
-      `&body=${encodeURIComponent(mailBody)}`;
-    window.location.href = href;
-
-    // Re-enable button after a short delay (the user may cancel the mail client)
-    window.setTimeout(() => setSending(false), 1500);
+    setStatus("sending");
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   const inputBase =
@@ -159,13 +163,37 @@ export default function EnquiryForm() {
           />
         </div>
 
+        {status === "success" && (
+          <div
+            role="status"
+            className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-relaxed text-emerald-800"
+          >
+            Thank you! We&apos;ll get back to you within 1 business day.
+          </div>
+        )}
+        {status === "error" && (
+          <div
+            role="alert"
+            className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-red-800"
+          >
+            Something went wrong. Please try again or email us at{" "}
+            <a
+              href="mailto:info@dhc.com.sg"
+              className="font-semibold underline"
+            >
+              info@dhc.com.sg
+            </a>
+            .
+          </div>
+        )}
+
         <button
           type="submit"
-          disabled={sending}
+          disabled={status === "sending"}
           className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0071ba] px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-xl hover:shadow-[#0071ba]/30 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
-          {sending ? "Opening your mail app…" : "Send Enquiry"}
-          {!sending && (
+          {status === "sending" ? "Sending…" : "Send Enquiry"}
+          {status !== "sending" && (
             <span className="transition-transform group-hover:translate-x-1">
               →
             </span>
