@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import JobsListing from "./_components/JobsListing";
+import { fetchMcfJobs, MCF_SEARCH_URL } from "@/lib/mcfJobs";
+import LiveJobsList from "./_components/LiveJobsList";
 
 export const metadata: Metadata = {
   title: "Open Jobs",
   description:
-    "Browse open roles across Singapore and Southeast Asia with Dynamic Human Capital. Search MyCareersFuture and JobStreet, or apply to featured roles directly.",
+    "Browse open roles across Singapore and Southeast Asia with Dynamic Human Capital. Live listings from MyCareersFuture and JobStreet.",
   alternates: { canonical: "/jobs" },
 };
 
-const MYCAREERSFUTURE_URL =
-  "https://www.mycareersfuture.gov.sg/search?search=dynamic+human+capital&sortBy=new_posting_date";
 const JOBSTREET_URL =
   "https://www.jobstreet.com.sg/jobs?q=Dynamic+Human+Capital&sortmode=ListedDate";
 
@@ -78,7 +77,10 @@ function PortalCard({
 
 /* ---------- page ---------- */
 
-export default function JobsPage() {
+export default async function JobsPage() {
+  // Fetched server-side and cached for 1 hour (see src/lib/mcfJobs.ts).
+  const mcfResult = await fetchMcfJobs();
+
   return (
     <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
       {/* Minimal header */}
@@ -139,7 +141,7 @@ export default function JobsPage() {
             name="MyCareersFuture"
             description="Browse all DHC-listed roles on Singapore's official government job portal — across every industry and seniority level."
             cta="View All Jobs on MyCareersFuture"
-            href={MYCAREERSFUTURE_URL}
+            href={MCF_SEARCH_URL}
           />
           <PortalCard
             accentBg="bg-blue-50"
@@ -154,9 +156,9 @@ export default function JobsPage() {
         </div>
       </section>
 
-      {/* Search + Featured Roles (interactive) */}
+      {/* Live MCF feed — fetched server-side, revalidates hourly */}
       <section className="mx-auto max-w-6xl px-6 pb-16">
-        <JobsListing />
+        <LiveJobsList result={mcfResult} />
       </section>
 
       {/* Navy Quick Apply strip */}
