@@ -176,11 +176,6 @@ export const metadata: Metadata = {
   verification: {
     google: "Eiac3MaOtpxD-nRhyQmDBlkixc5vBhA7O1_CGgLLY10",
   },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-  },
 };
 
 const SCHEMA = [
