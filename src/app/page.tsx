@@ -3,6 +3,7 @@
 import { Component, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ComposableMap,
   Geographies,
@@ -74,7 +75,7 @@ const JOB_TICKER = [
   { role: "Project Engineer", salary: "$6,200" },
 ];
 
-const HIRE_FORM = "https://forms.gle/dMc28vTtxo2A1KhQ7";
+const HIRE_TALENT_HREF = "/hire-talent";
 const JOBS_LINK =
   "https://www.mycareersfuture.gov.sg/search?search=dynamic+human+capital&sortBy=new_posting_date";
 const JOBSTREET_LINK =
@@ -872,15 +873,13 @@ export default function Home() {
               Find a Job
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
-            <a
-              href={HIRE_FORM}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={HIRE_TALENT_HREF}
               className="group flex items-center justify-center gap-2 rounded-xl border-2 border-[#0071ba] bg-white px-8 py-3.5 text-sm font-bold text-[#0071ba] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0071ba]/5 hover:shadow-lg hover:shadow-[#0071ba]/15"
             >
               Hire Talent
               <span className="transition-transform group-hover:translate-x-1">→</span>
-            </a>
+            </Link>
           </div>
 
           {/* Bento stat cards */}
@@ -1121,15 +1120,13 @@ export default function Home() {
                   ISO certified. Trusted by 200+ leading companies.
                 </p>
                 <div className="mt-6 flex flex-col gap-3">
-                  <a
-                    href={HIRE_FORM}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={HIRE_TALENT_HREF}
                     className="group/btn flex items-center justify-between rounded-xl bg-[#0071ba] px-5 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
                   >
                     <span>Talk to a Consultant</span>
                     <span className="transition-transform group-hover/btn:translate-x-1">→</span>
-                  </a>
+                  </Link>
                   <a
                     href="mailto:career@dhc.com.sg"
                     className="group/btn flex items-center justify-between rounded-xl border border-[#020817]/10 bg-white px-5 py-3.5 text-sm font-bold text-[#020817] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0071ba] hover:text-[#0071ba]"

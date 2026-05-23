@@ -18,7 +18,7 @@ const NAV_LINKS = [
   { label: "Contact",       href: "/contact" },
 ];
 
-const HIRE_FORM = "https://forms.gle/dMc28vTtxo2A1KhQ7";
+const HIRE_TALENT_HREF = "/hire-talent";
 
 /* ------------------------------------------------------------------ */
 /*  TaglineWalker                                                      */
@@ -158,14 +158,12 @@ export default function SiteNav() {
 
         {/* CTA + hamburger */}
         <div className="flex items-center gap-3">
-          <a
-            href={HIRE_FORM}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={HIRE_TALENT_HREF}
             className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-xl bg-[#0071ba] px-5 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
           >
             Hire Talent
-          </a>
+          </Link>
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -206,15 +204,13 @@ export default function SiteNav() {
                 </Link>
               );
             })}
-            <a
-              href={HIRE_FORM}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={HIRE_TALENT_HREF}
               onClick={() => setMenuOpen(false)}
               className="mt-2 flex min-h-[44px] items-center justify-center rounded-xl bg-[#0071ba] px-5 py-3 text-center text-sm font-bold text-white"
             >
               Hire Talent
-            </a>
+            </Link>
           </div>
         </div>
       )}
