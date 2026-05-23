@@ -48,14 +48,6 @@ class MapErrorBoundary extends Component<
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 
-const NAV_LINKS = [
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Jobs", href: "/jobs" },
-  { label: "MOM Resources", href: "/mom-resources" },
-  { label: "Contact", href: "/contact" },
-];
-
 const HERO_PHRASES = [
   "Your Next Career Move Starts Here",
   "Hire Smarter. Move Faster.",
@@ -166,79 +158,6 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
       {count.toLocaleString()}
       {suffix}
     </>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  TaglineWalker                                                      */
-/*  Pixel-art office worker (~14px tall) — DHC-blue suit + briefcase.  */
-/*  Faces right by default; the .tagline-walk keyframe handles the     */
-/*  scaleX flip when he walks back. The .tagline-walker class          */
-/*  positions him absolutely with feet on the tagline baseline.        */
-/* ------------------------------------------------------------------ */
-
-function TaglineWalker() {
-  // Pivots (in viewBox units) for the two leg groups and the briefcase arm.
-  const HIP_FRONT = { transformBox: "view-box" as const, transformOrigin: "11.7px 15.7px" };
-  const HIP_BACK  = { transformBox: "view-box" as const, transformOrigin: "8.9px 15.7px"  };
-  const SHOULDER  = { transformBox: "view-box" as const, transformOrigin: "14.6px 11px"   };
-
-  // DHC palette
-  const SUIT      = "#0071ba"; // jacket + front arm
-  const SUIT_DARK = "#005a96"; // back arm
-  const TROUSER   = "#003a5c"; // legs
-  const SHOE      = "#1a1a22";
-  const SKIN      = "#e9b98c";
-  const HAIR      = "#2b2b33";
-  const SHIRT     = "#ffffff";
-  const CASE      = "#8a5a2a"; // briefcase body
-  const CASE_DK   = "#5e3a18"; // briefcase latch
-  const HANDLE    = "#3a2a1a"; // briefcase handle
-
-  return (
-    <div className="tagline-walker" aria-hidden="true">
-      <div className="walker-bob">
-        <svg
-          width="13"
-          height="14"
-          viewBox="0 0 22 24"
-          shapeRendering="crispEdges"
-        >
-          {/* Back arm — static, behind the torso */}
-          <rect x="6" y="10.5" width="2" height="5.5" fill={SUIT_DARK} />
-
-          {/* Legs — drawn before the torso so the jacket covers the hip seam */}
-          <g className="worker-leg-b" style={HIP_BACK}>
-            <rect x="7.7" y="15.5" width="2.4" height="5.3" fill={TROUSER} />
-            <rect x="6.6" y="20.6" width="3.6" height="1.7" fill={SHOE} />
-          </g>
-          <g className="worker-leg-a" style={HIP_FRONT}>
-            <rect x="10.5" y="15.5" width="2.4" height="5.3" fill={TROUSER} />
-            <rect x="10.3" y="20.6" width="3.6" height="1.7" fill={SHOE} />
-          </g>
-
-          {/* Suit jacket */}
-          <rect x="7.5" y="10" width="7" height="6.2" fill={SUIT} />
-          {/* White shirt + collar peeking out */}
-          <rect x="8.6" y="9"  width="4"   height="1.6" fill={SHIRT} />
-          <rect x="10.4" y="10" width="1.3" height="3.6" fill={SHIRT} />
-
-          {/* Head + hair */}
-          <rect x="9" y="4.4" width="5"   height="4.8" fill={SKIN} />
-          <rect x="7" y="4"   width="2.2" height="4.2" fill={HAIR} />
-          <rect x="7" y="2"   width="7.2" height="2.6" fill={HAIR} />
-
-          {/* Front arm + briefcase — swings with the walk */}
-          <g className="worker-arm" style={SHOULDER}>
-            <rect x="13.5" y="10.5" width="2.3" height="5.4" fill={SUIT} />
-            <rect x="13.6" y="15.4" width="2.1" height="1.4" fill={SKIN} />
-            <rect x="13.7" y="15.9" width="2"   height="1.2" fill={HANDLE} />
-            <rect x="11.9" y="16.9" width="4.8" height="3.5" fill={CASE} />
-            <rect x="11.9" y="18.3" width="4.8" height="0.6" fill={CASE_DK} />
-          </g>
-        </svg>
-      </div>
-    </div>
   );
 }
 
@@ -914,123 +833,8 @@ function SEAPresenceMap() {
 /* ------------------------------------------------------------------ */
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
-      {/* ============================ NAV ============================ */}
-      <nav
-        className={`sticky top-0 z-50 overflow-hidden border-b bg-white transition-all duration-300 ${
-          scrolled
-            ? "border-[#E6E9F2] shadow-[0_4px_20px_rgba(2,8,23,0.05)]"
-            : "border-transparent"
-        }`}
-      >
-        <div className="relative z-10 mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:h-24">
-          {/* Logo with neon chaser */}
-          <a
-            href="/"
-            className="relative flex h-full flex-col items-start justify-center gap-1"
-            aria-label="Dynamic Human Capital — home"
-          >
-            {/* Logo with chasing-light underline */}
-            <div className="flex w-fit flex-col">
-              <Image
-                src="/dhc-logo.png"
-                alt="Dynamic Human Capital"
-                width={130}
-                height={44}
-                priority
-                className="block h-9 w-auto object-contain"
-              />
-              <div className="logo-underline mt-1.5" aria-hidden="true" />
-            </div>
-            {/* Tagline below the logo; fixed width keeps the text on one line */}
-            <div className="relative hidden w-[280px] md:block">
-              <span className="tagline-text text-[9px] font-bold uppercase leading-none tracking-[0.15em] text-[#0071ba]">
-                Connecting Talents, Driving Dreams
-              </span>
-              <TaglineWalker />
-            </div>
-          </a>
-
-          {/* Centre links */}
-          <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 lg:flex">
-            {NAV_LINKS.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                className="text-sm font-medium text-[#5b6478] transition-colors duration-200 hover:text-[#0071ba]"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="flex items-center gap-3">
-            <a
-              href={HIRE_FORM}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-xl bg-[#0071ba] px-5 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-lg hover:shadow-[#0071ba]/25"
-            >
-              Hire Talent
-            </a>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden"
-            >
-              <span className={`h-0.5 w-6 bg-[#020817] transition-all ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-              <span className={`h-0.5 w-6 bg-[#020817] transition-all ${menuOpen ? "opacity-0" : ""}`} />
-              <span className={`h-0.5 w-6 bg-[#020817] transition-all ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div
-            id="mobile-menu"
-            className="relative z-10 border-t border-[#E6E9F2] bg-white lg:hidden"
-          >
-            <div className="flex flex-col gap-1 px-6 py-4">
-              {NAV_LINKS.map((l) => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex min-h-[44px] items-center text-sm font-medium text-[#5b6478] transition-colors hover:text-[#0071ba]"
-                >
-                  {l.label}
-                </a>
-              ))}
-              <a
-                href={HIRE_FORM}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMenuOpen(false)}
-                className="mt-2 flex min-h-[44px] items-center justify-center rounded-xl bg-[#0071ba] px-5 py-3 text-center text-sm font-bold text-white"
-              >
-                Hire Talent
-              </a>
-            </div>
-          </div>
-        )}
-      </nav>
-
       {/* ============================ HERO =========================== */}
       <section className="relative bg-gradient-to-b from-white to-[#F0F4F8] px-6 pb-24 pt-16 md:pt-20">
         <div className="relative mx-auto flex max-w-4xl flex-col items-center text-center">

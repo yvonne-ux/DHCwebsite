@@ -78,32 +78,6 @@ function ActionIcon() {
 export default function ScamWarningPage() {
   return (
     <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
-      {/* Minimal header — logo + back link */}
-      <header className="sticky top-0 z-50 border-b border-[#E6E9F2] bg-white">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-          <Link
-            href="/"
-            className="flex items-center"
-            aria-label="Dynamic Human Capital — home"
-          >
-            <Image
-              src="/dhc-logo.png"
-              alt="Dynamic Human Capital"
-              width={130}
-              height={44}
-              priority
-              className="h-9 w-auto object-contain"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="text-sm font-medium text-[#5b6478] transition-colors hover:text-[#0071ba]"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-      </header>
-
       {/* Hero */}
       <section className="bg-gradient-to-b from-white to-[#F0F4F8] px-6 pb-16 pt-16 md:pt-20">
         <div className="mx-auto max-w-3xl text-center">

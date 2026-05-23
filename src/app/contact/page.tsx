@@ -103,35 +103,6 @@ const LINKEDIN_URL =
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-[#F7F8FC] text-[#020817]">
-      {/* Minimal header */}
-      <header className="sticky top-0 z-50 border-b border-[#EAEDF3] bg-white">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-          <Link
-            href="/"
-            className="flex items-center"
-            aria-label="Dynamic Human Capital — home"
-          >
-            <Image
-              src="/dhc-logo.png"
-              alt="Dynamic Human Capital"
-              width={130}
-              height={44}
-              priority
-              className="h-9 w-auto object-contain"
-            />
-          </Link>
-          <nav aria-label="Breadcrumb" className="text-sm text-[#5b6478]">
-            <Link href="/" className="transition-colors hover:text-[#0071ba]">
-              Home
-            </Link>
-            <span className="mx-2 text-[#cbd5e1]" aria-hidden="true">
-              /
-            </span>
-            <span className="font-medium text-[#020817]">Contact</span>
-          </nav>
-        </div>
-      </header>
-
       {/* Intro — centred */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14 text-center md:pt-20">
         <span className="text-sm font-semibold uppercase tracking-widest text-[#0071ba]">

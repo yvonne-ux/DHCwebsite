@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import ScamBanner from "./_components/ScamBanner";
+import SiteNav from "./_components/SiteNav";
 
 const FOOTER_NAV = [
   { label: "About",         href: "/about" },
@@ -228,6 +229,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
         />
         <ScamBanner />
+        <SiteNav />
         {children}
         <SiteFooter />
       </body>
