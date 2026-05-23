@@ -173,6 +173,9 @@ export const metadata: Metadata = {
     description: OG_DESCRIPTION,
     images: [OG_IMAGE],
   },
+  verification: {
+    google: "Eiac3MaOtpxD-nRhyQmDBlkixc5vBhA7O1_CGgLLY10",
+  },
 };
 
 const SCHEMA = [
