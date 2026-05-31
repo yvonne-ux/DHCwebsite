@@ -263,8 +263,15 @@ export default function HireTalentForm() {
         </button>
 
         <p className="text-center text-xs text-[#94a3b8]">
-          Your information is kept confidential and never shared with third
-          parties.
+          Submissions are processed by Formspree (USA) and routed to our
+          consultants&apos; Google Workspace inboxes. See our{" "}
+          <a
+            href="/privacy-policy"
+            className="font-semibold text-[#5b6478] underline decoration-dotted underline-offset-2 hover:text-[#0071ba]"
+          >
+            Privacy Policy
+          </a>{" "}
+          for the full list of processors.
         </p>
       </div>
     </form>
