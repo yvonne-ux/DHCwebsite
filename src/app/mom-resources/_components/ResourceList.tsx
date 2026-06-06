@@ -107,7 +107,7 @@ function ResourceCard({ r }: { r: Resource }) {
         {r.desc}
       </p>
       <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-[#0071ba]">
-        Visit MOM
+        Visit Site
         <span className="transition-transform group-hover:translate-x-1">
           →
         </span>

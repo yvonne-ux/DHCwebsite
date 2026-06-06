@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import ResourceList from "./_components/ResourceList";
 
 export const metadata: Metadata = {
-  title: "MOM Resources & Work Pass Guides",
+  title: "Singapore Employment Essentials",
   description:
-    "Everything you need to know about Singapore work passes, MOM employment regulations, CPF, IR8A and fair-employment practices. Curated MOM resources from Dynamic Human Capital.",
+    "Everything you need to know about Singapore work passes, MOM employment regulations, CPF, IR8A and fair-employment practices. Curated HR resources from Dynamic Human Capital.",
   alternates: { canonical: "/mom-resources" },
 };
 
@@ -34,10 +32,10 @@ export default function MOMResourcesPage() {
       {/* Intro — centred */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14 text-center md:pt-20">
         <span className="text-sm font-semibold uppercase tracking-widest text-[#0071ba]">
-          Work Pass Guides
+          Resources
         </span>
         <h1 className="mt-4 font-sans text-4xl font-bold leading-tight text-[#020817]">
-          MOM Resources &amp; Work Pass Guides
+          Singapore Employment Essentials
         </h1>
         <p className="mx-auto mt-5 max-w-[600px] text-lg leading-relaxed text-[#5b6478]">
           Everything you need to know about Singapore work passes, eligibility
@@ -62,7 +60,7 @@ export default function MOMResourcesPage() {
               Quick Tools
             </span>
             <h2 className="mt-3 font-sans text-2xl font-bold text-[#020817] md:text-3xl">
-              MOM Tools at a Glance
+              Tools at a Glance
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-base leading-relaxed text-[#5b6478]">
               The three tools we reach for most when advising clients on
@@ -97,27 +95,6 @@ export default function MOMResourcesPage() {
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="mx-auto max-w-3xl px-6 pb-12 pt-14 md:pb-16">
-        <div className="rounded-xl border border-[#E6E9F2] border-l-4 border-l-[#0071ba] bg-white p-10 text-center shadow-[0_4px_24px_rgba(2,8,23,0.05)]">
-          <h2 className="font-sans text-2xl font-bold text-[#020817] md:text-3xl">
-            Need help with work pass applications?
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-[#5b6478]">
-            Our MOM-licensed consultants can guide you through Singapore&apos;s
-            employment regulations end to end.
-          </p>
-          <Link
-            href="/contact"
-            className="group mt-7 inline-flex items-center gap-2 rounded-xl bg-[#0071ba] px-8 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#005a96] hover:shadow-xl hover:shadow-[#0071ba]/30"
-          >
-            Talk to a Consultant
-            <span className="transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </Link>
-        </div>
-      </section>
     </main>
   );
 }
