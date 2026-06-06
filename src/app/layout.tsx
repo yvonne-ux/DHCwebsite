@@ -9,7 +9,7 @@ const FOOTER_NAV = [
   { label: "About",         href: "/about" },
   { label: "Services",      href: "/services" },
   { label: "Jobs",          href: "/jobs" },
-  { label: "MOM Resources", href: "/mom-resources" },
+  { label: "Resources",     href: "/mom-resources" },
   { label: "Contact",       href: "/contact" },
 ];
 
