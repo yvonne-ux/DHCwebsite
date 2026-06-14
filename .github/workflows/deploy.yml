@@ -3,11 +3,23 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # CSO M3: daily rebuild so the live MyCareersFuture jobs feed
+  # in src/lib/mcfJobs.ts doesn't go stale (output: 'export' bakes
+  # the fetch result at build time only — see mcfJobs.ts L6-10).
+  schedule:
+    - cron: "0 1 * * *"   # 01:00 UTC daily, approx 09:00 SGT
+  # Manual trigger for emergency rebuilds.
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# Cancel previous in-flight deploys when a new commit lands.
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -16,11 +28,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # CSO M5: first-party actions on the v4 major. Workflow has no
+      # untrusted-user-input surface (no pull_request_target, no run
+      # interpolation of github.event.* fields) so v4-major-pin is
+      # the documented GitHub-recommended posture; SHA-pinning is a
+      # follow-up hardening once the v4 line stabilises.
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

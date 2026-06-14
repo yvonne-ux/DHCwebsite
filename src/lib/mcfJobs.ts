@@ -169,7 +169,27 @@ export async function fetchMcfJobs(): Promise<McfFetchResult> {
     }
 
     const data = (await res.json()) as McfApiResponse;
-    const jobs = (data.results ?? [])
+
+    // Build-time schema canary (CSO M2). If MCF rotates v2 → v3 and drops
+    // the `results` array or removes `postedCompany.uen`, the page would
+    // silently empty without this. We fail the build instead so a deploy
+    // can't ship an empty Jobs page.
+    if (!Array.isArray(data.results)) {
+      throw new Error(
+        "MCF API schema canary failed: response.results is not an array " +
+          "(API may have rotated from v2). Update src/lib/mcfJobs.ts.",
+      );
+    }
+    const firstWithCompany = data.results.find((j) => j.postedCompany);
+    if (data.results.length > 0 && firstWithCompany && !firstWithCompany.postedCompany?.uen) {
+      throw new Error(
+        "MCF API schema canary failed: postedCompany.uen missing on first " +
+          "result. UEN filter cannot fire — refusing to ship a Jobs page " +
+          "that may leak other employers' roles. Update src/lib/mcfJobs.ts.",
+      );
+    }
+
+    const jobs = data.results
       .filter((j) => j.postedCompany?.uen === DHC_UEN)
       .slice(0, 6)
       .map(normalize);

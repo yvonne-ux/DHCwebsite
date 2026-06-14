@@ -43,7 +43,7 @@ export default function PrivacyPolicy() {
         </h1>
         <p className="mt-3 text-[#5b6478]">Dynamic Human Capital Pte Ltd</p>
         <p className="mt-1 text-sm text-[#94a3b8]">
-          Effective: 30 September 2023 · Last Updated: 4 August 2024
+          Effective: 30 September 2023 · Last Updated: 31 May 2026
         </p>
 
         <div className="mt-10 rounded-xl border border-[#E6E9F2] bg-white p-8 shadow-[0_4px_24px_rgba(2,8,23,0.04)] md:p-10">
@@ -69,16 +69,41 @@ export default function PrivacyPolicy() {
           </Section>
 
           <Section number="2" title="Personal Data Collected">
+            <p className="mb-3">
+              The categories of personal data DHC may collect depend on the
+              stage of your engagement with us:
+            </p>
+            <p className="mb-2">
+              <strong className="font-semibold text-[#020817]">
+                Website forms (this site):
+              </strong>{" "}
+              name, email, phone, company name, job title, message content.
+              Submitted via the &ldquo;Enquire&rdquo; and &ldquo;Hire
+              Talent&rdquo; forms only.
+            </p>
+            <p className="mb-2">
+              <strong className="font-semibold text-[#020817]">
+                Active candidacy (collected after you engage with a consultant):
+              </strong>
+            </p>
             <ul className="list-disc space-y-1 pl-5">
               <li>Full name, gender, date of birth, nationality</li>
-              <li>Contact details (address, phone, email)</li>
+              <li>Address and additional contact details</li>
               <li>Resume, educational and professional qualifications</li>
               <li>Employment history and references</li>
-              <li>Salary information and bank account details</li>
-              <li>Next-of-kin and family member details</li>
-              <li>Work-related health information and disabilities</li>
-              <li>Photographs</li>
+              <li>Salary expectations and, at offer stage, bank account for
+                payroll</li>
+              <li>Next-of-kin and family member details (where required by the
+                placement)</li>
+              <li>Work-related health information and disabilities (where
+                required by the role)</li>
+              <li>Photographs (where required by the role)</li>
             </ul>
+            <p className="mt-3 text-sm">
+              The website itself never collects items in the second list —
+              those are obtained directly by your assigned consultant under a
+              separate written consent.
+            </p>
           </Section>
 
           <Section number="3" title="Collection, Use, and Disclosure">
@@ -113,10 +138,66 @@ export default function PrivacyPolicy() {
             or as required by law.
           </Section>
 
-          <Section number="7" title="International Transfers">
-            Personal data may be transferred outside Singapore to service
-            providers, with appropriate legal safeguards ensuring comparable
-            protection standards.
+          <Section number="7" title="International Transfers &amp; Named Processors">
+            <p>
+              DHC uses a small number of named third-party processors to deliver
+              this website and our placement services. Each processor handles
+              personal data under contractual safeguards comparable to PDPA
+              protection.
+            </p>
+            <ul className="mt-3 list-disc space-y-1.5 pl-5">
+              <li>
+                <strong className="font-semibold text-[#020817]">
+                  Formspree, Inc.
+                </strong>{" "}
+                (Pennsylvania, USA) — receives form submissions from the
+                Enquiry and Hire Talent forms on this website and forwards
+                them to our consultants&apos; mailboxes. Data Processing
+                Addendum:{" "}
+                <a
+                  href="https://formspree.io/legal/dpa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[#0071ba] hover:underline"
+                >
+                  formspree.io/legal/dpa
+                </a>
+                .
+              </li>
+              <li>
+                <strong className="font-semibold text-[#020817]">
+                  Google Workspace
+                </strong>{" "}
+                (Singapore region) — hosts DHC&apos;s consultant inboxes,
+                calendars and shared drives. PDPA-aligned standard contractual
+                clauses apply.
+              </li>
+              <li>
+                <strong className="font-semibold text-[#020817]">
+                  GitHub Pages
+                </strong>{" "}
+                (Microsoft, USA) and{" "}
+                <strong className="font-semibold text-[#020817]">
+                  Cloudflare
+                </strong>{" "}
+                (USA) — host and route the static{" "}
+                <span className="font-mono">dhc.com.sg</span> website pages.
+                The website itself does not store personal data; these
+                providers see only HTTP traffic logs.
+              </li>
+              <li>
+                <strong className="font-semibold text-[#020817]">
+                  Singapore client employers
+                </strong>{" "}
+                — at placement stage, your CV and assessment are shared with
+                the prospective employer named in our written consent.
+              </li>
+            </ul>
+            <p className="mt-3 text-sm">
+              No personal data is sold. Processors are audited annually by the
+              Data Protection Officer. We will name any new processor in this
+              section before it goes live.
+            </p>
           </Section>
 
           <Section number="8" title="Data Protection Officer">

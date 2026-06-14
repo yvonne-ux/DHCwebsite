@@ -216,6 +216,28 @@ const SCHEMA = [
   },
 ];
 
+// Interim Content-Security-Policy via <meta http-equiv> (CSO M6).
+// GH Pages does not honour _headers, so this is the strongest CSP we can
+// publish until the C3 migration to CF Pages lands. Meta-CSP is weaker
+// than an HTTP-header CSP (no report-uri, no frame-ancestors enforcement
+// against framing) but materially better than no CSP. `'unsafe-inline'`
+// on script-src and style-src is required by Next 14's app-router output
+// + Tailwind + framer-motion's inline-style injection; tighten to nonces
+// post-migration.
+const CSP_META =
+  "default-src 'self'; " +
+  "script-src 'self' 'unsafe-inline'; " +
+  "style-src 'self' 'unsafe-inline'; " +
+  "img-src 'self' data: https:; " +
+  "font-src 'self' data:; " +
+  "connect-src 'self' https://formspree.io; " +
+  "form-action https://formspree.io 'self'; " +
+  "frame-ancestors 'none'; " +
+  "base-uri 'self'; " +
+  "object-src 'none'";
+
+const SCHEMA_JSON = JSON.stringify(SCHEMA);
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -223,10 +245,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta httpEquiv="Content-Security-Policy" content={CSP_META} />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+      </head>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
+          // Standard Next 14 pattern for JSON-LD; payload is a literal
+          // SCHEMA constant, no user input, no XSS surface.
+          dangerouslySetInnerHTML={{ __html: SCHEMA_JSON }}
         />
         <ScamBanner />
         <SiteNav />

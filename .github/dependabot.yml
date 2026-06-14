@@ -1,0 +1,37 @@
+# Dependabot configuration — CSO L7.
+# Surfaces npm CVE updates + GitHub Actions version bumps on a weekly cadence.
+# Matches the orchestra's CSO-03 + CSO-15 cadence so portfolio-wide vuln-diff
+# can cross-reference Dependabot alerts.
+
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: Asia/Singapore
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - npm
+    # Group all non-security minor + patch bumps into one weekly PR; security
+    # alerts always open their own PR regardless.
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: Asia/Singapore
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - github-actions
